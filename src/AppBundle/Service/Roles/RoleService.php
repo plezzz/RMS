@@ -11,7 +11,6 @@ class RoleService implements RoleServiceInterface
 
     public function __construct(RoleRepository $roleRepository)
     {
-        var_dump($roleRepository);
         $this->roleRepository = $roleRepository;
     }
 

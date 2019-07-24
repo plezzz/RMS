@@ -25,12 +25,12 @@ class UserService implements UserServiceInterface
     private $roleService;
 
     public function __construct(Security $security,
-                              //  UserRepository $userRepository,
+                               UserRepository $userRepository,
                                 ArgonEncryption $encryptionService,
                                RoleServiceInterface $roleService)
     {
         $this->security = $security;
-       // $this->userRepository = $userRepository;
+        $this->userRepository = $userRepository;
         $this->encryptionService = $encryptionService;
         $this->roleService = $roleService;
 
