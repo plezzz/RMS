@@ -32,14 +32,14 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                      {#  {% if app.user %}
+                        {% if app.user %}
                             <li>
                                 <a href="{{ path('user_profile') }}" class="navbar-brand">
                                     My Profile
                                 </a>
 
                             </li>
-                            <li>
+                           {# <li>
                                 <a href="{{ path('my_articles') }}" class="navbar-brand">
                                     My Articles
                                 </a>
@@ -48,7 +48,7 @@
                                 <a href="{{ path('article_create') }}" class="navbar-brand">
                                     Create Article
                                 </a>
-                            </li>
+                            </li>#}
                             <li>
                                 <a href="{{ path('security_logout') }}" class="navbar-brand">
                                     Logout
@@ -65,7 +65,7 @@
                                     LOGIN
                                 </a>
                             </li>
-                        {% endif %}#}
+                        {% endif %}
                     </ul>
                 </div>
             </div>
