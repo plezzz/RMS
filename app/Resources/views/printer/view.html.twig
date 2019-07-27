@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container body-content">
+        <div class="row">
+            <div class="col-md-12">
+                <article>
+
+                    <header>
+                        <img src="{{ printer.getModel.getImageUrl }}" width="300">
+                        {{ printer.getModel }}
+                        {{ printer.batch }}
+                        {{ printer.serialNumber }}
+                        {{ printer.invoiceDescription }}
+                        {{ printer.addProtocol }}
+                        {{ printer.addPrice }}
+                        {{ printer.customerPrice }}
+
+                        {{ printer.diagnostic }}
+                        {{ printer.problemDescription }}
+
+                        {{ printer.warrantySticker }}
+
+                        {{ printer.comments }}
+
+                        Data Added: {{ printer.dateAdded|date("F jS \\a\\t g:ia") }}
+
+                        {{ printer.serialNumber }}
+                        {{ printer.printerStatus }}
+
+                    </header>
+                    <p>
+                    <table border="2">
+                        <thead>
+                        <td>
+                            Cartridge
+                        </td>
+                        <td>
+                            Counter
+                        </td>
+                        <td>
+                            dddd
+                        </td>
+                        <td>
+                            dddd
+                        </td> <td>
+                            dddd
+                        </td>
+                        <td>
+                            dddd
+                        </td>
+                        <td>
+                            dddd
+                        </td>
+                        <td>
+                            dddd
+                        </td>
+                        <td>
+                            dddd
+                        </td>
+
+                        </thead>
+                        <tbody>
+                        <td>
+                            {{ printer.cartridge }}
+                        </td>
+                        <td>
+                            {{ printer.counter }}
+                        </td>
+                        </tbody>
+                    </table>
+                    </p>
+                    <p>
+
+                    </p>
+
+                    <small class="author">
+
+                    </small>
+
+                    <footer>
+                        <div class="pull-right">
+                            {#  {% if app.getUser() and (app.getUser().isAuthor(article) or app.getUser().isAdmin()) %}
+                                  <a class="btn btn-success btn-xs" href="{{ path('article_edit',{'id':article.id}) }}">edit</a>
+                                  <a class="btn btn-danger btn-xs" href="{{ path('article_delete',{'id':article.id}) }}">delete</a>
+                              {% endif %}#}
+                            <a class="btn btn-default btn-xs" href="{{ path('homepage') }}">back &raquo;</a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

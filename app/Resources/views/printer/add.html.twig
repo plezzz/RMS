@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div class="container body-content span=8 offset=2">
+        <div class="well">
+            <form class="form-horizontal" action="{{ path('add_printer') }}" method="POST">
+                <fieldset>
+                    <legend>New Printer</legend>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_batch">Batch</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="printer_batch" placeholder="batch"
+                                   name="printer[batch]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_model">Model</label>
+                        <div class="col-sm-4">
+                            <label>
+                                <select class="custom-select" name="printer[model]">
+                                    {% for model in models %}
+                                        <option value="{{ model.id }}">{{ model.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_cartridge">Cartridge</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="printer_cartridge" placeholder="cartridge"
+                                   name="printer[cartridge]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_serialNumber">Serial Number</label>
+                        <div class="col-sm-4 ">
+                            <input type="text" class="form-control" id="printer_serialNumber" placeholder="Serial Number"
+                                   name="printer[serialNumber]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_problemDescription">Problem Description</label>
+                        <div class="col-sm-6 ">
+                            <textarea class="form-control" rows="6" id="printer_problemDescription"
+                                   name="printer[problemDescription]"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_Diagnostic">Diagnostic</label>
+                        <div class="col-sm-6 ">
+                            <textarea class="form-control" rows="6" id="printer_Diagnostic"
+                                      name="printer[diagnostic]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_invoiceDescription">Invoice Description</label>
+                        <div class="col-sm-6 ">
+                            <textarea class="form-control" rows="6" id="printer_invoiceDescription"
+                                      name="printer[invoiceDescription]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_warrantySticker">Warranty Sticker</label>
+                        <div class="col-sm-6 ">
+                            <input type="checkbox" class="form-control" id="printer_warrantySticker"
+                                   name="printer[warrantySticker]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_counter">Counter</label>
+                        <div class="col-sm-6 ">
+                            <textarea class="form-control" rows="1" id="printer_counter"
+                                      name="printer[counter]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_addPrice">Add Price</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" class="form-control" id="printer_addPrice" step="any"
+                                   name="printer[addPrice]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_customerPrice">Customer Price</label>
+                        <div class="col-sm-4 ">
+                            <input type="number" class="form-control" id="printer_customerPrice" step="any"
+                                   name="printer[customerPrice]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_addProtocol">Add Protocol</label>
+                        <div class="col-sm-6 ">
+                            <textarea class="form-control" rows="1" id="printer_addProtocol"
+                                      name="printer[addProtocol]"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_Comments">Comments</label>
+                        <div class="col-sm-6 ">
+                            <textarea class="form-control" rows="6" id="printer_Comments"
+                                      name="printer[comments]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="printer_status">Status</label>
+                        <div class="col-sm-4">
+                            <label>
+                                <select class="custom-select" name="printer[status]">
+                                    {% for statusOne in status %}
+                                        <option value="{{ statusOne.id }}">{{ statusOne.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+
+                    {{ form_row(form._token) }}
+                    <div class="form-group">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <a class="btn btn-default" href="{{ path('homepage') }}">Cancel</a>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock %}
