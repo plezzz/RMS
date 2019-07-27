@@ -3,12 +3,9 @@
 
 namespace AppBundle\Service\Users;
 
-
-use AppBundle\Entity\Role;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Encryption\ArgonEncryption;
-use AppBundle\Service\Encryption\EncryptionServiceInterface;
 use AppBundle\Service\Roles\RoleServiceInterface;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
