@@ -1,95 +1,220 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <div class="container body-content">
-        <div class="row">
-            <div class="col-md-12">
-                <article>
 
-                    <header>
-                        <img src="{{ printer.getModel.getImageUrl }}" width="300">
-                        {{ printer.getModel }}
-                        {{ printer.batch }}
-                        {{ printer.serialNumber }}
-                        {{ printer.invoiceDescription }}
-                        {{ printer.addProtocol }}
-                        {{ printer.addPrice }}
-                        {{ printer.customerPrice }}
-
-                        {{ printer.diagnostic }}
-                        {{ printer.problemDescription }}
-
-                        {{ printer.warrantySticker }}
-
-                        {{ printer.comments }}
-
-                        Data Added: {{ printer.dateAdded|date("F jS \\a\\t g:ia") }}
-
-                        {{ printer.serialNumber }}
-                        {{ printer.printerStatus }}
-
-                    </header>
-                    <p>
-                    <table border="2">
-                        <thead>
-                        <td>
-                            Cartridge
-                        </td>
-                        <td>
-                            Counter
-                        </td>
-                        <td>
-                            dddd
-                        </td>
-                        <td>
-                            dddd
-                        </td> <td>
-                            dddd
-                        </td>
-                        <td>
-                            dddd
-                        </td>
-                        <td>
-                            dddd
-                        </td>
-                        <td>
-                            dddd
-                        </td>
-                        <td>
-                            dddd
-                        </td>
-
-                        </thead>
-                        <tbody>
-                        <td>
-                            {{ printer.cartridge }}
-                        </td>
-                        <td>
-                            {{ printer.counter }}
-                        </td>
-                        </tbody>
-                    </table>
-                    </p>
-                    <p>
-
-                    </p>
-
-                    <small class="author">
-
-                    </small>
-
-                    <footer>
-                        <div class="pull-right">
-                            {#  {% if app.getUser() and (app.getUser().isAuthor(article) or app.getUser().isAdmin()) %}
-                                  <a class="btn btn-success btn-xs" href="{{ path('article_edit',{'id':article.id}) }}">edit</a>
-                                  <a class="btn btn-danger btn-xs" href="{{ path('article_delete',{'id':article.id}) }}">delete</a>
-                              {% endif %}#}
-                            <a class="btn btn-default btn-xs" href="{{ path('homepage') }}">back &raquo;</a>
+    <!-- begin #content -->
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb hidden-print pull-right">
+            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item active">Printer Details</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header hidden-print">Priter Details <small>header small text goes here...</small></h1>
+        <!-- end page-header -->
+        <!-- begin invoice -->
+        <div class="invoice">
+            <!-- begin invoice-company -->
+            <div class="invoice-company text-inverse f-w-600">
+                    <span class="pull-right hidden-print">
+                        <a href="{{ path('printer_edit', {'id': printer.id}) }}"><button  type="button" class="btn btn-lime">Edit</button></a>
+                        <a href="{{ path('printer_delete', {'id': printer.id}) }}"><button  type="button" class="btn btn-danger">Delete</button></a>
+					</span>
+                {{ printer.companyName.name }}
+            </div>
+            <!-- end invoice-company -->
+            <!-- begin invoice-header -->
+            <div class="invoice-header">
+                <div class="invoice-from">
+                    <small>Model Image</small>
+                    <address class="m-t-5 m-b-5">
+                        <img alt="printer Image" src="{{ printer.getModel.getImageUrl }}" width="150"/>
+                    </address>
+                </div>
+                <div class="invoice-to">
+                    <small>Model</small>
+                    <address class="m-t-5 m-b-5">
+                        <strong class="text-inverse">{{ printer.model }}</strong><br/>
+                    </address>
+                </div>
+                <div class="invoice-date">
+                    <address class="m-t-5 m-b-5">
+                        <small>Date Arrive</small>
+                        <div class="date text-inverse m-t-5">{{ printer.dateAdded|date("d.m.Y H:i") }}</div>
+                        <small>Date Departure</small>
+                        {% if printer.dateFinish|date("d.m.Y H:i") == "30.11.-0001 00:00" %}
+                            <div class="date text-inverse m-t-5">Not Finished</div>
+                        {% else %}
+                            <div class="date text-inverse m-t-5">{{ printer.dateFinish|date("d.m.Y H:i") }}</div>
+                        {% endif %}
+                    </address>
+                </div>
+                <div class="invoice-price">
+                    <div class="invoice-price-right">
+                        <small>Serial Number</small> <span class="f-w-600">{{ printer.serialNumber }}</span>
+                    </div>
+                    <div class="invoice-price-right">
+                        <small>Status</small> <span class="f-w-600">{{ printer.printerStatus }}</span>
+                    </div>
+                    <div class="invoice-price-right">
+                        <small>Technician</small> <span class="f-w-600">{{ printer.technician.fullname }}</span>
+                    </div>
+                </div>
+            </div>
+            <!-- end invoice-header -->
+            <!-- begin invoice-price -->
+            <div class="invoice-price">
+                <div class="invoice-price-left">
+                    <div class="invoice-price-row">
+                        <div class="sub-price">
+                            <small>Add Price</small>
+                            <span class="text-inverse">{{ printer.addPrice }} лв.</span>
                         </div>
-                    </footer>
-                </article>
+                        <div class="sub-price">
+                            <small>Customer Price</small>
+                            <span class="text-inverse"> {{ printer.customerPrice }} лв.</span>
+                        </div>
+                        <div class="sub-price">
+                            <small>Counter</small>
+                            <span class="text-inverse"> {{ printer.counter }}</span>
+                        </div>
+                        <div class="sub-price">
+                            <small>Cartridge</small>
+                            <span class="text-inverse"> {{ printer.cartridge }}</span>
+                        </div>
+                        <div class="sub-price">
+                            <small>Warranty Sticker</small>
+                            <span class="text-inverse">
+                                {% if printer.warrantySticker %}
+                                    <span class="label label-danger">Yes</span>
+                                    {% else %}
+                                    <span class="label label-info">No</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="invoice-price-right">
+                    <small>Batch</small> <span class="f-w-600"> P{{ printer.batch }}</span>
+                </div>
+            </div>
+            <!-- end invoice-price -->
+            <!-- begin row -->
+            <div class="row">
+                <!-- begin col-6 -->
+                <div class="col-md-12">
+                    <div class="m-b-10 f-s-10 m-t-5"><b class="text-inverse">CARD GROUPS</b></div>
+                    <!-- begin card-group -->
+                    <div class="card-group">
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">Problem Description</h4>
+                                <p class="card-text">{{ printer.problemDescription }}</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">Diagnostic</h4>
+                                <p class="card-text">{{ printer.diagnostic }}</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">Invoice Description</h4>
+                                <p class="card-text">{{ printer.invoiceDescription }}</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">Comments</h4>
+                                <p class="card-text">{{ printer.comments }}</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end card-group -->
+                </div>
+                <!-- end col-6 -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end table-responsive
+        <img alt="Added Image" src="{{ asset('images/clientPrinterImages/' ~ printer.image) }}" width="150"/>-->
+        <!-- begin superbox -->
+        <div class="superbox " data-offset="50">
+            <div class="superbox-list">
+                <a href="javascript:;" class="superbox-img">
+                    <img data-img="{{ asset('images/clientPrinterImages/' ~ printer.image) }}" />
+                    <span style="background: url({{ asset('images/clientPrinterImages/' ~ printer.image) }});"></span>
+                </a>
             </div>
         </div>
+        <!-- end superbox -->
+        <div class="panel panel-inverse">
+            <!-- begin printers with same serial number -->
+            <div class="panel-body">
+                <table id="data-table-default" class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="text-center">Date</th>
+                        <th class="text-center">Problem</th>
+                        <th class="text-center">Diagnostic</th>
+                        <th class="text-center">Invoice Description</th>
+                        <th class="text-center">Cartridge</th>
+                        <th class="text-center no-wrap">Customer Price</th>
+                        <th class="text-center">Counter</th>
+                        <th class="text-center no-wrap">Technician</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for printerOne in printers %}
+                        <tr>
+                            <td class="text-center">
+                                <span class="text-inverse">{{ printerOne.dateAdded|date("d.m.Y H:i") }}</span>
+                            </td>
+                            <td class="text-center">
+                                {{ printerOne.problemDescription }}
+                            </td>
+                            <td class="text-center">
+                                {{ printerOne.diagnostic }}
+                            </td>
+                            <td class="text-center" style="column-width: 75px; -webkit-column-width: 75px;">
+                                {{ printerOne.invoiceDescription }}
+                            </td>
+                            <td class="text-center">{{ printerOne.cartridge }}</td>
+                            <td class="text-center">{{ printerOne.customerPrice }}</td>
+                            <td class="text-center">{{ printerOne.counter }}</td>
+                            <td class="text-center">{{ printerOne.technician.fullname }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('printer_view', {'id': printerOne.id}) }}"><button  type="button" class="btn btn-success">View</button></a>
+                                <a href="{{ path('printer_edit', {'id': printerOne.id}) }}"><button  type="button" class="btn btn-lime">Edit</button></a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- end printers with same serial number -->
+        </div>
+        <!-- end invoice-content -->
     </div>
+    <!-- end invoice -->
+    <!-- end #content -->
+    <script src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            App.init();
+            GalleryV2.init();
+        });
+    </script>
 {% endblock %}
 

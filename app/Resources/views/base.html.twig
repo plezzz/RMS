@@ -1,17 +1,60 @@
-{#
-   This is the base template used as the application layout which contains the
-   common elements and decorates all the other templates.
-   See http://symfony.com/doc/current/book/templating.html#template-inheritance-and-layouts
-#}
 <!DOCTYPE html>
 <html lang="en-US">
 <head>
     <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <title>{% block title %}SoftUni Blog{% endblock %}</title>
+    <!-- Mobile Specific -->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>{% block title %}RMS{% endblock %}</title>
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/bootstrap-datetimepicker.min.css') }}">
+        <!-- ================== BEGIN BASE CSS STYLE ================== -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/animate/animate.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/default/style.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/default/style-responsive.min.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('css/default/theme/default.css') }}">
+        <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/jquery-jvectormap/jquery-jvectormap.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-calendar/css/bootstrap_calendar.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/nvd3/build/nv.d3.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/bootstrap-datepicker/css/bootstrap-datepicker3.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-select/bootstrap-select.min.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/password-indicator/css/password-indicator.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-combobox/css/bootstrap-combobox.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/jquery-tag-it/css/jquery.tagit.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/bootstrap-eonasdan-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/jquery-simplecolorpicker/jquery.simplecolorpicker.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/jquery-simplecolorpicker/jquery.simplecolorpicker-fontawesome.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/jquery-simplecolorpicker/jquery.simplecolorpicker-glyphicons.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/DataTables/media/css/dataTables.bootstrap.min.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css') }}">
+        <link rel="stylesheet" id="theme"
+              href="{{ asset('plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/superbox/css/superbox.min.css') }}">
+        <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+        <!-- ================== BEGIN BASE JS ================== -->
+        <script src="{{ asset('plugins/pace/pace.min.js') }}"></script>
+        <!-- ================== END BASE JS ================== -->
     {% endblock %}
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
 </head>
@@ -19,84 +62,203 @@
 <body id="{% block body_id %}{% endblock %}">
 
 {% block header %}
-    <header>
-        <div class="navbar navbar-default navbar-static-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    {<a href="{{ path('homepage') }}" class="navbar-brand">RMS</a>}
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        {% if app.user %}
-                            <li>
-                                <a href="{{ path('user_profile') }}" class="navbar-brand">
-                                    My Profile
-                                </a>
 
-                            </li>
-                           {# <li>
-                                <a href="{{ path('my_articles') }}" class="navbar-brand">
-                                    My Articles
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('article_create') }}" class="navbar-brand">
-                                    Create Article
-                                </a>
-                            </li>#}
-                            <li>
-                                <a href="{{ path('security_logout') }}" class="navbar-brand">
-                                    Logout
-                                </a>
-                            </li>
-                        {% else %}
-                            <li>
-                                <a href="{{ path('user_register') }}">
-                                    REGISTER
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ path('security_login') }}">
-                                    LOGIN
-                                </a>
-                            </li>
-                        {% endif %}
+<body>
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+<!-- end #page-loader -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+    <!-- begin #header -->
+    <div id="header" class="header navbar-default">
+        <!-- begin navbar-header -->
+        <div class="navbar-header">
+            <a href="{{ path('homepage') }}" class="navbar-brand"><span class="navbar-logo"></span> <b>RMS</b></a>
+            <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <!-- end navbar-header -->
+
+        <!-- begin header-nav -->
+        <ul class="navbar-nav navbar-right">
+            <li>
+                <form class="navbar-form">
+                    <div class="form-group">
+                        <label>
+                            <input type="text" class="form-control" placeholder="Enter keyword"/>
+                        </label>
+                        <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+                    </div>
+                </form>
+            </li>
+            <li class="dropdown navbar-user">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="{{ asset('img/user/user-13.jpg') }}" alt=""/>
+                    {% if app.user %} }}
+                        <span class="d-none d-md-inline">{{ app.user.fullName }}</span> <b class="caret"></b>
+                    {% endif %}
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="javascript:;" class="dropdown-item">Edit Profile</a>
+                    <a href="javascript:;" class="dropdown-item"><span class="badge badge-danger pull-right">2</span>
+                        Inbox</a>
+                    <a href="javascript:;" class="dropdown-item">Calendar</a>
+                    <a href="javascript:;" class="dropdown-item">Setting</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{{ path('security_logout') }}" class="dropdown-item">Log Out</a>
+                </div>
+            </li>
+        </ul>
+        <!-- end header navigation right -->
+    </div>
+    <!-- end #header -->
+
+    <!-- begin #sidebar -->
+    <div id="sidebar" class="sidebar">
+        <!-- begin sidebar scrollbar -->
+        <div data-scrollbar="true" data-height="100%">
+            <!-- begin sidebar user -->
+            <ul class="nav">
+                <li class="nav-profile">
+                    <a href="javascript:;" data-toggle="nav-profile">
+                        <div class="cover with-shadow"></div>
+                        <div class="image">
+                            <img src="{{ asset('img/user/user-13.jpg') }}" alt=""/>
+                        </div>
+                        <div class="info">
+                            <b class="caret pull-right"></b>
+                            {{ app.user.fullName }}
+                            <small>{% for role in app.user.roles %}
+                                    {{ role }}
+                                {% endfor %}
+                            </small>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <ul class="nav nav-profile">
+                        <li><a href="javascript:;"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li><a href="javascript:;"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>
+                        <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-{% endblock %}
+                </li>
+            </ul>
+            <!-- end sidebar user -->
+            <!-- begin sidebar nav -->
+            <ul class="nav">
+                <li class="nav-header">Navigation</li>
+                <li class="has-sub active">
+                    <a href="javascript:;">
+                        <b class="caret"></b>
+                        <i class="fa fa-th-large"></i>
+                        <span>Common</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
+                        <li><a href="{{ path('rss') }}"><i class="fa fa-newspaper"></i> <span>News</span></a></li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+                    <a href="javascript:;">
+                        <b class="caret"></b>
+                        <i class="fa fa-print"></i>
+                        <span>Printer</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="{{ path('add_printer') }}">Add <i
+                                        class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                        <li><a href="{{ path('printer_view_all') }}">View<span class="label label-theme m-l-5">ALL</span></a>
+                        </li>
+                        <li><a href="{{ path('printer_viewLast') }}">View<span class="label label-theme m-l-5">LAST</span></a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="has-sub">
+                    <a href="javascript:;">
+                        <b class="caret"></b>
+                        <i class="fa fa-users"></i>
+                        <span>User</span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li><a href="{{ path('add_printer') }}">Add <i
+                                        class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                        <li><a href="{{ path('printer_view_all') }}">View<span class="label label-theme m-l-5">ALL</span></a>
+                        </li>
+                        <li><a href="{{ path('printer_viewLast') }}">View<span class="label label-theme m-l-5">LAST</span></a>
+                        </li>
+                    </ul>
+                </li>
 
-<div class="container body-container">
-    {% block body %}
-        <div class="row">
-            <div id="main" class="col-sm-9">
-                {% block main %}{% endblock %}
-            </div>
+                <!-- begin sidebar minify button -->
+                <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i
+                                class="fa fa-angle-double-left"></i></a></li>
+                <!-- end sidebar minify button -->
+            </ul>
+            <!-- end sidebar nav -->
         </div>
+        <!-- end sidebar scrollbar -->
+    </div>
+    <div class="sidebar-bg"></div>
+    <!-- end #sidebar -->
     {% endblock %}
+    {% block body %}
+        {% block main %}{% endblock %}
+    {% endblock %}
+    {% block footer %}
+    <!-- begin scroll to top btn -->
+    <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i
+                class="fa fa-angle-up"></i></a>
+    <!-- end scroll to top btn -->
 </div>
-
-{% block footer %}
-    <footer>
-        <div class="container modal-footer">
-            <p>&copy; 2018 - Software University Foundation</p>
-        </div>
-    </footer>
+<!-- end page container -->
 {% endblock %}
-
 {% block javascripts %}
-    <script src="{{ asset('js/jquery-3.3.1.min.js') }}"></script>
-    <script src="{{ asset('js/moment.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
-    <script src="{{ asset('js/timeoutInfo.js') }}"></script>
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!--[if lt IE 9]-->
+    <script src="{{ asset('crossbrowserjs/html5shiv.js') }}"></script>
+    <script src="{{ asset('crossbrowserjs/respond.min.js') }}"></script>
+    <!--[endif]-->
+    <script src="{{ asset('plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('plugins/js-cookie/js.cookie.js') }}"></script>
+    <script src="{{ asset('js/theme/default.min.js') }}"></script>
+    <script src="{{ asset('js/apps.min.js') }}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="{{ asset('plugins/d3/d3.min.js') }}"></script>
+    <script src="{{ asset('plugins/nvd3/build/nv.d3.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-jvectormap/jquery-jvectormap.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-jvectormap/jquery-jvectormap-world-merc-en.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap-calendar/js/bootstrap_calendar.min.js') }}"></script>
+    <script src="{{ asset('js/demo/dashboard-v2.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap-select/bootstrap-select.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/media/js/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/media/js/dataTables.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/buttons.bootstrap.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/buttons.flash.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/jszip.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/vfs_fonts.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('js/demo/table-manage-buttons.demo.min.js') }}"></script>
+    <script src="{{ asset('plugins/superbox/js/jquery.superbox.min.js') }}"></script>
+    <script src="{{ asset('js/demo/gallery-v2.demo.min.js') }}"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+    <script>
+        $(document).ready(function () {
+            App.init();
+            TableManageButtons.init();
+        });
+    </script>
 {% endblock %}
 
 </body>

@@ -6,6 +6,7 @@ use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use AppBundle\Service\Users\UserServiceInterface;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,12 +64,14 @@ class UsersController extends Controller
     }
 
     /**
-     * @Route("/logout",name="security_logout")
-     *
-     * @throws Exception
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Route("/statistic", name="statistic")
      */
-    public function logout()
+    public function indexAction()
     {
-        throw new Exception("Logout failed!");
+
+        return $this->render('users/statistic.html.twig', [
+
+        ]);
     }
 }

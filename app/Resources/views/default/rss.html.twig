@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb pull-right">
+            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:;">Extra</a></li>
+            <li class="breadcrumb-item active">Timeline</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header">Technology News <small>RSS from Investor.BG</small></h1>
+        <!-- end page-header -->
+        <!-- begin timeline -->
+        <ul class="timeline">
+            {% for item in rss.channel.item %}
+                <li>
+                    <!-- begin timeline-time -->
+                    <div class="timeline-time">
+                        <span class="time">{{ item.pubDate|date("l")}}</span>
+                        <span class="time">{{ item.pubDate|date("d.m.Y")}}</span>
+                        <span class="time">{{ item.pubDate|date("H:i")}}</span>
+                    </div>
+                    <!-- end timeline-time -->
+                    <!-- begin timeline-icon -->
+                    <div class="timeline-icon">
+                        <a href="javascript:;">&nbsp;</a>
+                    </div>
+                    <!-- end timeline-icon -->
+                    <!-- begin timeline-body -->
+                    <div class="timeline-body">
+                        <div class="timeline-header">
+                            <span class="username"><a href="{{ item.link }}" target="_blank">> {{ item.title }}</a> <small></small></span>
+                        </div>
+                        <div class="timeline-content">
+                            <p>
+                                {{ item.description }}
+                            </p>
+                        </div>
+                    </div>
+                    <!-- end timeline-body -->
+                </li>
+            {% endfor %}
+        </ul>
+        <!-- end timeline -->
+    </div>
+    <!-- end #content -->
+    <script>
+        $(document).ready(function () {
+            App.init();
+            Timeline.init();
+        });
+    </script>
+{% endblock %}
+

@@ -1,36 +1,130 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- Mobile Specific -->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>{% block title %}RMS{% endblock %}</title>
 
-{% block body_id 'login' %}
+    {% block stylesheets %}
+    <!-- ================== BEGIN BASE CSS STYLE ================== -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/animate/animate.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/default/style.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/default/style-responsive.min.css') }}">
+    <link rel="stylesheet" id="theme" href="{{ asset('css/default/theme/default.css') }}">
+    <!-- ================== END BASE CSS STYLE ================== -->
 
-{% block main %}
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{{ asset('plugins/pace/pace.min.js') }}"></script>
+    <!-- ================== END BASE JS ================== -->
+    {% endblock %}
 
-    <div class="container body-content span=8 offset=2">
-        <div class="well">
-            <form name="authenticate" class="form-horizontal" action="{{ path('security_login') }}" method="post">
-                <fieldset>
-                    <legend>Login</legend>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="user_email">Email</label>
-                        <div class="col-sm-4 ">
-                            <input type="email" class="form-control" id="user_email" placeholder="Email" name="_username">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="password">Password</label>
-                        <div class="col-sm-4">
-                            <input type="password" class="form-control" id="password" placeholder="Password" name="_password">
-                        </div>
-                    </div>
-                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-blog" href="{{ path('homepage') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Login</button>
-                        </div>
-                    </div>
+</head>
+<body class="pace-top">
+<!-- begin #page-loader -->
+<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+<!-- end #page-loader -->
 
-                </fieldset>
+<!-- begin login-cover -->
+<div class="login-cover">
+    <div class="login-cover-image" style="background-image: url(img/login-bg/login-bg-17.jpg)"
+         data-id="login-cover-image"></div>
+    <div class="login-cover-bg"></div>
+</div>
+<!-- end login-cover -->
+
+<!-- begin #page-container -->
+<div id="page-container" class="fade">
+    <!-- begin login -->
+    <div class="login login-v2" data-pageload-addclass="animated fadeIn">
+        <!-- begin brand -->
+        <div class="login-header">
+            <div class="brand">
+                <span class="logo"></span> <b>RMS</b>
+                <small>Repairs Managment System</small>
+            </div>
+            <div class="icon">
+                <i class="fa fa-lock"></i>
+            </div>
+        </div>
+        <!-- end brand -->
+        <!-- begin login-content -->
+        <div class="login-content">
+            <form name="authenticate" action="{{ path('security_login') }}" method="post"
+                  class="margin-bottom-0">
+                <div class="form-group m-b-20">
+                    <input type="text" class="form-control form-control-lg" placeholder="Email Address" name="_username" required/>
+                </div>
+                <div class="form-group m-b-20">
+                    <input type="password" class="form-control form-control-lg" placeholder="Password" name="_password" required/>
+                </div>
+                <div class="checkbox checkbox-css m-b-20">
+                    <input type="checkbox" id="remember_checkbox"/>
+                    <label for="remember_checkbox">
+                        Remember Me
+                    </label>
+                </div>
+                <div class="login-buttons">
+                    <button type="submit" class="btn btn-success btn-block btn-lg">Sign me in</button>
+                </div>
+                <div class="m-t-20">
+                    Not a member yet? Click <a href="javascript:;">here</a> to register.
+                </div>
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
             </form>
         </div>
+        <!-- end login-content -->
     </div>
-{% endblock %}
+    <!-- end login -->
+
+    <!-- begin login-bg -->
+    <ul class="login-bg-list clearfix">
+        <li class="active"><a href="javascript:;" data-click="change-bg"
+                              data-img="img/login-bg/login-bg-17.jpg"
+                              style="background-image: url(img/login-bg/login-bg-17.jpg)"></a></li>
+        <li><a href="javascript:;" data-click="change-bg" data-img="img/login-bg/login-bg-16.jpg"
+               style="background-image: url(img/login-bg/login-bg-16.jpg)"></a></li>
+        <li><a href="javascript:;" data-click="change-bg" data-img="img/login-bg/login-bg-15.jpg"
+               style="background-image: url(img/login-bg/login-bg-15.jpg)"></a></li>
+        <li><a href="javascript:;" data-click="change-bg" data-img="img/login-bg/login-bg-14.jpg"
+               style="background-image: url(img/login-bg/login-bg-14.jpg)"></a></li>
+        <li><a href="javascript:;" data-click="change-bg" data-img="img/login-bg/login-bg-13.jpg"
+               style="background-image: url(img/login-bg/login-bg-13.jpg)"></a></li>
+        <li><a href="javascript:;" data-click="change-bg" data-img="img/login-bg/login-bg-12.jpg"
+               style="background-image: url(img/login-bg/login-bg-12.jpg)"></a></li>
+    </ul>
+    <!-- end login-bg -->
+</div>
+<!-- end page container -->
+
+<!-- ================== BEGIN BASE JS ================== -->
+<script src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+<script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+<!--[if lt IE 9]-->
+<script src="{{ asset('crossbrowserjs/html5shiv.js') }}"></script>
+<script src="{{ asset('crossbrowserjs/respond.min.js') }}"></script>
+<![endif]-->
+<script src="{{ asset('plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('plugins/js-cookie/js.cookie.js') }}"></script>
+<script src="{{ asset('js/theme/default.min.js') }}"></script>
+<script src="{{ asset('js/apps.min.js') }}"></script>
+<!-- ================== END BASE JS ================== -->
+
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="{{ asset('js/demo/login-v2.demo.min.js') }}"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
+
+<script>
+    $(document).ready(function () {
+        App.init();
+        LoginV2.init();
+    });
+</script>
+</body>
+</html>
+

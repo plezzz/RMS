@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <!-- begin col-8 -->
+    <div class="col-lg-8">
+        <div class="widget-chart with-sidebar inverse-mode">
+            <div class="widget-chart-content bg-black">
+                <h4 class="chart-title">
+                    Visitors Analytics
+                    <small>Where do our visitors come from</small>
+                </h4>
+                <div id="visitors-line-chart" class="widget-chart-full-width nvd3-inverse-mode" style="height: 260px;"></div>
+            </div>
+            <div class="widget-chart-sidebar bg-black-darker">
+                <div class="chart-number">
+                    1,225,729
+                    <small>Total visitors</small>
+                </div>
+                <div id="visitors-donut-chart" class="nvd3-inverse-mode p-t-10" style="height: 180px"></div>
+                <ul class="chart-legend f-s-11">
+                    <li><i class="fa fa-circle fa-fw text-primary f-s-9 m-r-5 t-minus-1"></i> 34.0% <span>New Visitors</span></li>
+                    <li><i class="fa fa-circle fa-fw text-success f-s-9 m-r-5 t-minus-1"></i> 56.0% <span>Return Visitors</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- end col-8 -->
+{% endblock %}
+
+

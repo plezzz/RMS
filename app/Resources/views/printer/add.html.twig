@@ -1,141 +1,150 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-    <div class="container body-content span=8 offset=2">
-        <div class="well">
-            <form class="form-horizontal" action="{{ path('add_printer') }}" method="POST">
-                <fieldset>
-                    <legend>New Printer</legend>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_batch">Batch</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="printer_batch" placeholder="batch"
-                                   name="printer[batch]">
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb pull-right">
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Page Options</a></li>
+            <li class="breadcrumb-item active">Add printer</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header">Add printer <small>header small text goes here...</small></h1>
+        <!-- end page-header -->
+        <form class="form-horizontal form-bordered action=" {{ path('add_printer') }} method="POST"
+              enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-6">
+                    <!-- begin panel-body -->
+                    <div class="panel-body panel-form">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_batch">Batch</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="printer_batch" placeholder="Batch"
+                                       name="printer[batch]" value="{{ printerOne }}">
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_model">Model</label>
-                        <div class="col-sm-4">
-                            <label>
-                                <select class="custom-select" name="printer[model]">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_serialNumber">Serial Number</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="printer_serialNumber"
+                                       placeholder="Serial Number" name="printer[serialNumber]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_companyName">Company Name</label>
+                            <div class="col-md-8">
+                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
+                                        data-style="btn-primary" id="printer_companyName" name="printer[companyName]">
+                                    {% for company in companies %}
+                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_model">Model</label>
+                            <div class="col-md-8">
+                                <select class="form-control selectpicker" data-size="10" name="printer[model]"
+                                        id="printer_model" data-live-search="true" data-style="btn-primary">
                                     {% for model in models %}
-                                        <option value="{{ model.id }}">{{ model.name }}</option>
+                                        <option value="{{ model.id }}">{{ model.brand }} {{ model.name }}</option>
                                     {% endfor %}
                                 </select>
-                            </label>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_warranty">Warranty Sticker</label>
+                            <div class="col-md-8">
+                                <div class="switcher">
+                                    <input type="checkbox" name="printer[warrantySticker]" id="printer_warranty"
+                                           value="false">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_problemDescription">Problem
+                                Description</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="6" cols="46" id="printer_problemDescription"
+                                          name="printer[problemDescription]"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_Diagnostic">Diagnostic</label>
+                            <div class="col-md-8">
+                                <textarea class="form-control" rows="6" cols="46" id="printer_Diagnostic"
+                                          name="printer[diagnostic]"></textarea>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_cartridge">Cartridge</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="printer_cartridge" placeholder="cartridge"
-                                   name="printer[cartridge]">
+                </div>
+                <div class="col-lg-6">
+                    <!-- begin panel-body -->
+                    <div class="panel-body panel-form">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_counter">Counter</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="printer_counter" placeholder="Counter"
+                                       name="printer[counter]">
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_serialNumber">Serial Number</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="printer_serialNumber" placeholder="Serial Number"
-                                   name="printer[serialNumber]">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_addPrice">Add Price</label>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control" step="any" id="printer_addPrice"
+                                       placeholder="Add Price"
+                                       name="printer[addPrice]">
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_problemDescription">Problem Description</label>
-                        <div class="col-sm-6 ">
-                            <textarea class="form-control" rows="6" id="printer_problemDescription"
-                                   name="printer[problemDescription]"></textarea>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_customerPrice">Customer Price</label>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control" step="any" id="printer_customerPrice"
+                                       placeholder="Customer Price" name="printer[customerPrice]">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_Diagnostic">Diagnostic</label>
-                        <div class="col-sm-6 ">
-                            <textarea class="form-control" rows="6" id="printer_Diagnostic"
-                                      name="printer[diagnostic]"></textarea>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_cartridge">Cartridge</label>
+                            <div class="col-md-8">
+                                <textarea type="text" rows="1" class="form-control" id="printer_cartridge"
+                                          placeholder="Cartridge" name="printer[cartridge]"></textarea>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_invoiceDescription">Invoice Description</label>
-                        <div class="col-sm-6 ">
-                            <textarea class="form-control" rows="6" id="printer_invoiceDescription"
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Image</label>
+                            <div class="col-md-8">
+                                <input type="file" class="form-control" id="printer_image"
+                                       placeholder="Image" name="printer[image]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_invoiceDescription">Invoice
+                                Description</label>
+                            <div class="col-md-8">
+                            <textarea class="form-control" rows="6"
+                                      cols="46"
+                                      id="printer_invoiceDescription"
                                       name="printer[invoiceDescription]"></textarea>
+                            </div>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_warrantySticker">Warranty Sticker</label>
-                        <div class="col-sm-6 ">
-                            <input type="checkbox" class="form-control" id="printer_warrantySticker"
-                                   name="printer[warrantySticker]">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_counter">Counter</label>
-                        <div class="col-sm-6 ">
-                            <textarea class="form-control" rows="1" id="printer_counter"
-                                      name="printer[counter]"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_addPrice">Add Price</label>
-                        <div class="col-sm-4 ">
-                            <input type="number" class="form-control" id="printer_addPrice" step="any"
-                                   name="printer[addPrice]">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_customerPrice">Customer Price</label>
-                        <div class="col-sm-4 ">
-                            <input type="number" class="form-control" id="printer_customerPrice" step="any"
-                                   name="printer[customerPrice]">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_addProtocol">Add Protocol</label>
-                        <div class="col-sm-6 ">
-                            <textarea class="form-control" rows="1" id="printer_addProtocol"
-                                      name="printer[addProtocol]"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_Comments">Comments</label>
-                        <div class="col-sm-6 ">
-                            <textarea class="form-control" rows="6" id="printer_Comments"
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_Comments">Comments</label>
+                            <div class="col-md-8">
+                            <textarea class="form-control" rows="6" cols="46" id="printer_Comments"
                                       name="printer[comments]"></textarea>
+                            </div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="printer_status">Status</label>
-                        <div class="col-sm-4">
-                            <label>
-                                <select class="custom-select" name="printer[status]">
-                                    {% for statusOne in status %}
-                                        <option value="{{ statusOne.id }}">{{ statusOne.name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </label>
-                        </div>
-                    </div>
-
-                    {{ form_row(form._token) }}
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-default" href="{{ path('homepage') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+                </div>
+            </div>
+            {{ form_row(form._token) }}
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-default" href="{{ path('homepage') }}">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
     </div>
+    <!-- end #content -->
 {% endblock %}
