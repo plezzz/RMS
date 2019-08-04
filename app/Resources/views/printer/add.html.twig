@@ -22,7 +22,7 @@
                             <label class="col-md-3 col-form-label" for="printer_batch">Batch</label>
                             <div class="col-md-8">
                                 <input type="text" class="form-control" id="printer_batch" placeholder="Batch"
-                                       name="printer[batch]" value="{{ printerOne }}">
+                                       name="printer[batch]" value="{{ newBatch }}">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -57,11 +57,15 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_warranty">Warranty Sticker</label>
                             <div class="col-md-8">
+
                                 <div class="switcher">
-                                    <input type="checkbox" name="printer[warrantySticker]" id="printer_warranty"
-                                           value="false">
+                                    <input type="checkbox" name="printer[warrantySticker]" id="printer_warranty"  value="false">
+                                    <label for="printer_warranty"></label>
                                 </div>
+
                             </div>
+                            <!-- switcher -->
+
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_problemDescription">Problem
@@ -147,4 +151,10 @@
         </form>
     </div>
     <!-- end #content -->
+    <script>
+        $(document).ready(function() {
+            App.init();
+            FormSliderSwitcher.init();
+        });
+    </script>
 {% endblock %}

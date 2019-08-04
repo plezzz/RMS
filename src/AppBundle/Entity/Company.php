@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -35,6 +36,25 @@ class Company
      */
     private $logoUrl;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="companyName")
+     */
+    private $users;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Printer", mappedBy="companyName")
+     */
+    private $printers;
+
+    public function __construct()
+    {
+        $this->users = new ArrayCollection();
+        $this->printers = new ArrayCollection();
+    }
 
     /**
      * Get id.
@@ -97,5 +117,37 @@ class Company
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getUsers(): ArrayCollection
+    {
+        return $this->users;
+    }
+
+    /**
+     * @param ArrayCollection $users
+     */
+    public function setUsers(ArrayCollection $users)
+    {
+        $this->users = $users;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPrinters(): ArrayCollection
+    {
+        return $this->printers;
+    }
+
+    /**
+     * @param ArrayCollection $printers
+     */
+    public function setPrinters(ArrayCollection $printers)
+    {
+        $this->printers = $printers;
     }
 }

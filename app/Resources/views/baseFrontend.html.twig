@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8"/>
+    <!-- Mobile Specific -->
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+    <title>{% block title %}RMS{% endblock %}</title>
+    {% block stylesheets %}
+        <!-- ================== BEGIN BASE CSS STYLE ================== -->
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('plugins/jquery-ui/jquery-ui.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/font-awesome/css/all.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('plugins/animate/animate.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/default/style.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/default/style-responsive.min.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('css/default/theme/default.css') }}">
+        <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
+
+        <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
+        <!-- ================== BEGIN BASE JS ================== -->
+        <script src="{{ asset('plugins/pace/pace.min.js') }}"></script>
+        <!-- ================== END BASE JS ================== -->
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}"/>
+</head>
+
+<body id="{% block body_id %}{% endblock %}">
+
+{% block header %}
+{% endblock %}
+{% block body %}
+    {% block main %}{% endblock %}
+{% endblock %}
+{% block footer %}
+
+    <!-- end page container -->
+{% endblock %}
+{% block javascripts %}
+    <!-- ================== BEGIN BASE JS ================== -->
+    <script src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <!--[if lt IE 9]-->
+    <script src="{{ asset('crossbrowserjs/html5shiv.js') }}"></script>
+    <script src="{{ asset('crossbrowserjs/respond.min.js') }}"></script>
+    <!--[endif]-->
+    <script src="{{ asset('plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <script src="{{ asset('plugins/js-cookie/js.cookie.js') }}"></script>
+    <script src="{{ asset('js/theme/default.min.js') }}"></script>
+    <script src="{{ asset('js/apps.min.js') }}"></script>
+    <!-- ================== END BASE JS ================== -->
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="{{ asset('js/demo/login-v2.demo.min.js') }}"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->
+    <script>
+        $(document).ready(function () {
+            App.init();
+            LoginV2.init();
+        });
+    </script>
+{% endblock %}
+
+</body>
+</html>

@@ -7,6 +7,7 @@ use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Encryption\ArgonEncryption;
 use AppBundle\Service\Roles\RoleServiceInterface;
+use Doctrine\ORM\ORMException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -45,6 +46,7 @@ class UserService implements UserServiceInterface
     /**
      * @param User $user
      * @return bool
+     * @throws ORMException
      */
     public function save(User $user): bool
     {
@@ -81,5 +83,18 @@ class UserService implements UserServiceInterface
     public function currentUser(): ?User
     {
         return $this->security->getUser();
+    }
+
+    /**
+     * @return array
+     */
+    public function findAll(): array
+    {
+        return $this->userRepository->findAll();
+    }
+
+    public function findAllTechnician(): array
+    {
+
     }
 }

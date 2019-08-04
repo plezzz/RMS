@@ -65,9 +65,9 @@ class UsersController extends Controller
 
     /**
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @Route("/statistic", name="statistic")
+     * @Route("/statistic", name="site_statistic")
      */
-    public function indexAction()
+    public function statistics()
     {
 
         return $this->render('users/statistic.html.twig', [

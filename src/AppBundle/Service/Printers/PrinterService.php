@@ -1,14 +1,15 @@
 <?php
 
-
 namespace AppBundle\Service\Printers;
 
-
 use AppBundle\Entity\Printer;
+use AppBundle\Form\PrinterType;
 use AppBundle\Repository\PrinterRepository;
-use DateTime;
-use DateTimeZone;
-use Doctrine\ORM\NonUniqueResultException;
+use AppBundle\Service\Company\CompanyServiceInterface;
+use AppBundle\Service\Users\UserServiceInterface;
+use Doctrine\ORM\ORMException;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class PrinterService implements PrinterServiceInterface
 {
@@ -17,14 +18,64 @@ class PrinterService implements PrinterServiceInterface
      */
     private $printerRepository;
 
-    public function __construct(PrinterRepository $printerRepository)
+    /**
+     * @var UserServiceInterface
+     */
+    private $userService;
+
+    /**
+     * @var StatusServiceInterface
+     */
+    private $statusService;
+
+    /**
+     * @var ModelServiceInterface
+     */
+    private $modelService;
+
+    /**
+     * @var CompanyServiceInterface
+     */
+    private $companyService;
+
+    /**
+     * PrinterService constructor.
+     * @param PrinterRepository $printerRepository
+     * @param UserServiceInterface $userService
+     * @param StatusServiceInterface $statusService
+     * @param ModelServiceInterface $modelService
+     * @param CompanyServiceInterface $companyService
+     */
+    public function __construct(PrinterRepository $printerRepository,
+                                UserServiceInterface $userService,
+                                StatusServiceInterface $statusService,
+                                ModelServiceInterface $modelService,
+                                CompanyServiceInterface $companyService)
     {
         $this->printerRepository = $printerRepository;
+        $this->userService = $userService;
+        $this->statusService = $statusService;
+        $this->modelService = $modelService;
+        $this->companyService = $companyService;
     }
 
-    public function create(Printer $printer): bool
+    /**
+     * @param Printer $printer
+     * @return bool
+     * @throws ORMException
+     */
+    public function add(Printer $printer): bool
     {
-        // TODO: Implement create() method.
+        $technician = $this->userService->currentUser();
+        $printer->setTechnician($technician);
+
+        $status = $this->statusService->findOneBy("Diagnostic");
+        $printer->setPrinterStatus($status);
+
+        if ($printer->getSerialNumber() === null)
+            $printer->setSerialNumber(1);
+
+        return $this->printerRepository->add($printer);
     }
 
     public function edit(Printer $printer): bool
@@ -32,37 +83,88 @@ class PrinterService implements PrinterServiceInterface
         // TODO: Implement edit() method.
     }
 
-    public function delete(Printer $printer): bool
+    /**
+     * @param int $id
+     * @return bool
+     * @throws ORMException
+     */
+    public function delete(int $id): bool
     {
-        // TODO: Implement delete() method.
+        $printer = $this->findOneByID($id);
+        return $this->printerRepository->delete($printer);
     }
 
     /**
      * @param string $serialNumber
      * @return array
      */
-    public function findAllBySerialNumber(string $serialNumber)
+    public function findAllBySerialNumber(string $serialNumber): array
     {
-        return $this->printerRepository->findBy(['serialNumber' => $serialNumber], ['dateAdded'=>'DESC']);
+        return $this->printerRepository->findBy(['serialNumber' => $serialNumber], ['dateAdded' => 'DESC']);
     }
 
-    public function findOneByID(int $id)
+    /**
+     * @param int $id
+     * @return Printer|null
+     */
+    public function findOneByID(int $id): ?Printer
     {
-        return $this->printerRepository->findBy(['id' => $id]);
+        return $this->printerRepository->find(['id' => $id]);
     }
 
-    public function findAll()
+    /**
+     * @return array
+     */
+    public function findAll(): array
     {
         return $this->printerRepository->findAll();
     }
 
-    public function findAllDESC()
+    /**
+     * @return array
+     */
+    public function findAllDESC(): array
     {
-        return $this->printerRepository->findBy([],['id'=>'desc']);
+        return $this->printerRepository->findBy([], ['id' => 'desc']);
     }
 
-    public function findLastAdded()
+    /**
+     * @return Printer|null
+     */
+    public function findLastAdded(): ?Printer
     {
-            return $this->printerRepository->findBy([],['id'=>'desc'],1);
+        $printer = $this->printerRepository->findBy([], ['id' => 'desc'], 1);
+        return $printer[0];
+    }
+
+    /**
+     * @return array
+     */
+    public function getData(): array
+    {
+        $models = $this->modelService->findAll();
+        $status = $this->statusService->findAll();
+        $companies = $this->companyService->findAll();
+        $printerLast = $this->findLastAdded();
+
+        return $allData = [$models, $status, $companies, $printerLast];
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllByTechnician(): array
+    {
+        $technician = $this->userService->currentUser();
+        return $this->printerRepository->findBy(['technician' => $technician], ['dateAdded' => 'DESC']);
+    }
+
+    /**
+     * @return array
+     */
+    public function findAllByCompany(): array
+    {
+        $companyId = $this->userService->currentUser()->getCompanyName()->getId();
+        return $this->printerRepository->findBy(['companyName' => $companyId], ['dateAdded' => 'DESC']);
     }
 }

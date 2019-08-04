@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="{{ asset('css/default/style.min.css') }}">
         <link rel="stylesheet" href="{{ asset('css/default/style-responsive.min.css') }}">
         <link rel="stylesheet" id="theme" href="{{ asset('css/default/theme/default.css') }}">
+        <!-- ================== END BASE CSS STYLE ================== -->
         <!-- ================== BEGIN PAGE LEVEL CSS STYLE ================== -->
         <link rel="stylesheet" id="theme" href="{{ asset('plugins/jquery-jvectormap/jquery-jvectormap.css') }}">
         <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-calendar/css/bootstrap_calendar.css') }}">
@@ -28,29 +29,11 @@
         <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-select/bootstrap-select.min.css') }}">
         <link rel="stylesheet" id="theme"
               href="{{ asset('plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css') }}">
-        <link rel="stylesheet" id="theme" href="{{ asset('plugins/password-indicator/css/password-indicator.css') }}">
-        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-combobox/css/bootstrap-combobox.css') }}">
-        <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-tagsinput/bootstrap-tagsinput.css') }}">
-        <link rel="stylesheet" id="theme" href="{{ asset('plugins/jquery-tag-it/css/jquery.tagit.css') }}">
         <link rel="stylesheet" id="theme" href="{{ asset('plugins/bootstrap-daterangepicker/daterangepicker.css') }}">
         <link rel="stylesheet" id="theme" href="{{ asset('plugins/select2/dist/css/select2.min.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/bootstrap-eonasdan-datetimepicker/build/css/bootstrap-datetimepicker.min.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/bootstrap-colorpalette/css/bootstrap-colorpalette.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/jquery-simplecolorpicker/jquery.simplecolorpicker.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/jquery-simplecolorpicker/jquery.simplecolorpicker-fontawesome.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/jquery-simplecolorpicker/jquery.simplecolorpicker-glyphicons.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/DataTables/media/css/dataTables.bootstrap.min.css') }}">
-        <link rel="stylesheet" id="theme"
-              href="{{ asset('plugins/DataTables/extensions/Buttons/css/buttons.bootstrap.min.css') }}">
+        <link rel="stylesheet" id="theme" href="{{ asset('plugins/superbox/css/superbox.min.css') }}">
         <link rel="stylesheet" id="theme"
               href="{{ asset('plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css') }}">
-        <link rel="stylesheet" id="theme" href="{{ asset('plugins/superbox/css/superbox.min.css') }}">
         <!-- ================== END PAGE LEVEL CSS STYLE ================== -->
         <!-- ================== BEGIN BASE JS ================== -->
         <script src="{{ asset('plugins/pace/pace.min.js') }}"></script>
@@ -63,9 +46,8 @@
 
 {% block header %}
 
-<body>
-<!-- begin #page-loader -->
-<div id="page-loader" class="fade show"><span class="spinner"></span></div>
+    <!-- begin #page-loader -->
+    <div id="page-loader" class="fade show"><span class="spinner"></span></div>
 <!-- end #page-loader -->
 
 <!-- begin #page-container -->
@@ -116,7 +98,6 @@
         <!-- end header navigation right -->
     </div>
     <!-- end #header -->
-
     <!-- begin #sidebar -->
     <div id="sidebar" class="sidebar">
         <!-- begin sidebar scrollbar -->
@@ -171,9 +152,14 @@
                     <ul class="sub-menu">
                         <li><a href="{{ path('add_printer') }}">Add <i
                                         class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
-                        <li><a href="{{ path('printer_view_all') }}">View<span class="label label-theme m-l-5">ALL</span></a>
+                        <li><a href="{{ path('printer_view_all') }}">View<span
+                                        class="label label-theme m-l-5">ALL</span></a>
                         </li>
-                        <li><a href="{{ path('printer_viewLast') }}">View<span class="label label-theme m-l-5">LAST</span></a>
+                        <li><a href="{{ path('printer_viewLast') }}">View<span
+                                        class="label label-theme m-l-5">LAST</span></a>
+                        </li>
+                        <li><a href="{{ path('printer_editLast') }}">Edit<span
+                                        class="label label-theme m-l-5">LAST</span></a>
                         </li>
                     </ul>
                 </li>
@@ -186,9 +172,11 @@
                     <ul class="sub-menu">
                         <li><a href="{{ path('add_printer') }}">Add <i
                                         class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
-                        <li><a href="{{ path('printer_view_all') }}">View<span class="label label-theme m-l-5">ALL</span></a>
+                        <li><a href="{{ path('printer_view_all') }}">View<span
+                                        class="label label-theme m-l-5">ALL</span></a>
                         </li>
-                        <li><a href="{{ path('printer_viewLast') }}">View<span class="label label-theme m-l-5">LAST</span></a>
+                        <li><a href="{{ path('printer_viewLast') }}">View<span
+                                        class="label label-theme m-l-5">LAST</span></a>
                         </li>
                     </ul>
                 </li>
@@ -210,11 +198,11 @@
     {% endblock %}
     {% block footer %}
     <!-- begin scroll to top btn -->
-    <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i
+    <a href="javascript:" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i
                 class="fa fa-angle-up"></i></a>
     <!-- end scroll to top btn -->
 </div>
-<!-- end page container -->
+    <!-- end page container -->
 {% endblock %}
 {% block javascripts %}
     <!-- ================== BEGIN BASE JS ================== -->
@@ -251,12 +239,16 @@
     <script src="{{ asset('plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js') }}"></script>
     <script src="{{ asset('js/demo/table-manage-buttons.demo.min.js') }}"></script>
     <script src="{{ asset('plugins/superbox/js/jquery.superbox.min.js') }}"></script>
+    <script src="{{ asset('plugins/bootstrap-sweetalert/sweetalert.min.js') }}"></script>
+    <script src="{{ asset('js/demo/ui-modal-notification.demo.min.js') }}"></script>
     <script src="{{ asset('js/demo/gallery-v2.demo.min.js') }}"></script>
     <!-- ================== END PAGE LEVEL JS ================== -->
     <script>
         $(document).ready(function () {
             App.init();
             TableManageButtons.init();
+            Notification.init();
+            GalleryV2.init();
         });
     </script>
 {% endblock %}

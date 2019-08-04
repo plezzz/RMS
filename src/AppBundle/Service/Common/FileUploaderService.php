@@ -26,7 +26,6 @@ class FileUploaderService
         try {
             $file->move($this->getTargetDirectory(), $fileName);
         } catch (FileException $e) {
-            // ... handle exception if something happens during file upload
         }
 
         return $fileName;
@@ -35,5 +34,10 @@ class FileUploaderService
     public function getTargetDirectory()
     {
         return $this->targetDirectory;
+    }
+
+    public function addImage($form)
+    {
+
     }
 }

@@ -9,7 +9,7 @@ security:
         # To see the users at src/AppBundle/DataFixtures/ORM/LoadFixtures.php
         # To load users from somewhere else: http://symfony.com/doc/current/cookbook/security/custom_provider.html
         database_users:
-            entity: { class: AppBundle:User, property: email }
+            entity: { class: AppBundle:User, property: username }
 
     # http://symfony.com/doc/current/book/security.html#firewalls-authentication
     firewalls:
@@ -33,12 +33,20 @@ security:
                 # Reference: http://symfony.com/doc/current/cookbook/security/csrf_in_login_form.html
                 csrf_token_generator: security.csrf.token_manager
                 default_target_path: homepage
-
             logout:
                 # The route name the user can go to in order to logout
                 path: security_logout
                 # The name of the route to redirect to after logging out
                 target: security_login
+            remember_me:
+                secret:   '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+                path:     /
+                # by default, the feature is enabled by checking a
+                # checkbox in the login form (see below), uncomment the
+                # following line to always enable it.
+                #always_remember_me: true
+                token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
 
     access_control:

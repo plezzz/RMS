@@ -7,7 +7,7 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb hidden-print pull-right">
             <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item active">Printer Details</li>
+            <li class="breadcrumb-item">Printer Details</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
@@ -18,9 +18,12 @@
             <!-- begin invoice-company -->
             <div class="invoice-company text-inverse f-w-600">
                     <span class="pull-right hidden-print">
-                        <a href="{{ path('printer_edit', {'id': printer.id}) }}"><button  type="button" class="btn btn-lime">Edit</button></a>
-                        <a href="{{ path('printer_delete', {'id': printer.id}) }}"><button  type="button" class="btn btn-danger">Delete</button></a>
-					</span>
+
+                        <a href="{{ path('printer_edit', {'id': printer.id}) }}"><button type="button" class="btn btn-lime">Edit</button></a>
+							<a href="#" input="3" data-text="4" data-click="swal-danger"  class="btn btn-danger">Delete</a>
+                        <input type="hidden" id="printerId" value="{{printer.id}}">
+
+                    </span>
                 {{ printer.companyName.name }}
             </div>
             <!-- end invoice-company -->
@@ -145,19 +148,19 @@
                 <!-- end col-6 -->
             </div>
             <!-- end row -->
-        </div>
-        <!-- end table-responsive
-        <img alt="Added Image" src="{{ asset('images/clientPrinterImages/' ~ printer.image) }}" width="150"/>-->
-        <!-- begin superbox -->
-        <div class="superbox " data-offset="50">
-            <div class="superbox-list">
-                <a href="javascript:;" class="superbox-img">
-                    <img data-img="{{ asset('images/clientPrinterImages/' ~ printer.image) }}" />
-                    <span style="background: url({{ asset('images/clientPrinterImages/' ~ printer.image) }});"></span>
-                </a>
+            <!-- begin superbox -->
+            <div class="superbox " data-offset="50">
+                <div class="superbox-list">
+                    <a href="javascript:;" class="superbox-img">
+                        <img data-img="{{ asset('images/clientPrinterImages/' ~ printer.image) }}"/>
+                        <span style="background: url({{ asset('images/clientPrinterImages/' ~ printer.image) }});"></span>
+                    </a>
+                </div>
             </div>
+            <!-- end superbox -->
         </div>
-        <!-- end superbox -->
+        <!-- end table-responsive -->
+
         <div class="panel panel-inverse">
             <!-- begin printers with same serial number -->
             <div class="panel-body">
@@ -195,8 +198,12 @@
                             <td class="text-center">{{ printerOne.counter }}</td>
                             <td class="text-center">{{ printerOne.technician.fullname }}</td>
                             <td class="text-center">
-                                <a href="{{ path('printer_view', {'id': printerOne.id}) }}"><button  type="button" class="btn btn-success">View</button></a>
-                                <a href="{{ path('printer_edit', {'id': printerOne.id}) }}"><button  type="button" class="btn btn-lime">Edit</button></a>
+                                <a href="{{ path('printer_view', {'id': printerOne.id}) }}">
+                                    <button type="button" class="btn btn-success">View</button>
+                                </a>
+                                <a href="{{ path('printer_edit', {'id': printerOne.id}) }}">
+                                    <button type="button" class="btn btn-lime">Edit</button>
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -209,12 +216,6 @@
     </div>
     <!-- end invoice -->
     <!-- end #content -->
-    <script src="{{ asset('plugins/jquery/jquery-3.3.1.min.js') }}"></script>
-    <script>
-        $(document).ready(function() {
-            App.init();
-            GalleryV2.init();
-        });
-    </script>
+
 {% endblock %}
 

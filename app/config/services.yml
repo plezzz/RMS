@@ -38,3 +38,6 @@ services:
     AppBundle\Service\Common\FileUploaderService:
         arguments:
             $targetDirectory: '%images_directory%'
+
+    Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider: ~
+

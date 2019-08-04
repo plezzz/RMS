@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PrinterType extends AbstractType
@@ -35,6 +34,7 @@ class PrinterType extends AbstractType
                 'value' => 1,
             ))
             ->add('counter', TextareaType::class)
+            ->add('printerStatus')
             ->add('addPrice', NumberType::class)
             ->add('customerPrice', NumberType::class)
             ->add('addProtocol', TextType::class)
