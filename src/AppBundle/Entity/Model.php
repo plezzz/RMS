@@ -140,7 +140,7 @@ class Model
 
     public function __toString()
     {
-        return $this->brand." ".$this->name;
+        return $this->getName();
     }
 }
 

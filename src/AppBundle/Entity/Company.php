@@ -114,11 +114,6 @@ class Company
         return $this->logoUrl;
     }
 
-    public function __toString()
-    {
-        return $this->name;
-    }
-
     /**
      * @return ArrayCollection
      */
@@ -149,5 +144,10 @@ class Company
     public function setPrinters(ArrayCollection $printers)
     {
         $this->printers = $printers;
+    }
+
+    public function __toString()
+    {
+       return $this->getName();
     }
 }

@@ -2,7 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Role;
 use AppBundle\Form\PrinterType;
 use AppBundle\Service\Common\FileUploaderService;
 use AppBundle\Service\Company\CompanyServiceInterface;
@@ -88,7 +87,8 @@ class PrinterController extends Controller
      */
     public function create(Request $request)
     {
-        list($models, $status, $companies, $printerLast) = $this->printerService->getData();
+        /** @var Printer $printerLast**/
+        list($models, $status, $companies, $technicians, $printerLast) = $this->printerService->getData();
         $newBatch = intval($printerLast->getBatch()) + 1;
 
         $printer = new Printer();
@@ -100,7 +100,8 @@ class PrinterController extends Controller
                 'models' => $models,
                 'status' => $status,
                 'companies' => $companies,
-                'newBatch' => $newBatch
+                'newBatch' => $newBatch,
+                'technicians' => $technicians
             ]);
     }
 
@@ -131,6 +132,74 @@ class PrinterController extends Controller
         );
     }
 
+    /**
+     * @Route("/printer/edit/{id}", name="printer_edit")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param $id
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function editPrinter($id, Request $request)
+    {
+        $printer = $this->printerService->findOneByID($id);
+        list($models, $status, $companies, $technicians) = $this->printerService->getData();
+
+        if ($printer === null) {
+            return $this->redirectToRoute("homepage");
+        }
+        $form = $this->createFormAndHandler($request, $printer);
+
+        if ($form->isSubmitted()) {
+
+            $imageFile = $form['image']->getData();
+            if ($imageFile) {
+                $imageFile = $this->fileUploadService->upload($imageFile);
+                $printer->setImage($imageFile);
+            }
+
+            if ($printer->getPrinterStatus()=='Ready')
+                $printer->setDateFinish($printer->setFirstDateAdded());
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($printer);
+            $em->flush();
+
+            return $this->redirectToRoute("printer_view",
+                [
+                    'id' => $printer->getId()
+                ]);
+        }
+
+        return $this->render('printer/edit.html.twig',
+            [
+                'printer' => $printer,
+                'form' => $form->createView(),
+                'models' => $models,
+                'status' => $status,
+                'companies' => $companies,
+                'technicians'=>$technicians
+            ]);
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     * @throws ORMException
+     * @Route("printer/delete/{id}",name="printer_delete", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     */
+
+    public function delete(int $id)
+    {
+        $this->printerService->delete($id);
+
+        return $this->redirectToRoute(
+            'homepage', []
+        );
+
+    }
 
     /**
      * @Route("/printer/{id}",name="printer_view" , methods={"GET"})
@@ -155,79 +224,6 @@ class PrinterController extends Controller
     }
 
     /**
-     * @Route("/printers/edit/{id}", name="printer_edit")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
-     * @param $id
-     * @param Request $request
-     * @return Response
-     */
-    public function editPrinter($id, Request $request)
-    {
-        $printer = $this->printerService->findOneByID($id);
-        $allTechnician =    $this->getDoctrine()->getRepository(Role::class)->findOneBy(['id'=>3]);
-        /**
-         * @var Role $allTechnician
-         */
-        var_dump($allTechnician->getUsers());
-        exit();
-        list($models, $status, $companies) = $this->printerService->getData();
-
-        if ($printer === null) {
-            return $this->redirectToRoute("homepage");
-        }
-        $form = $this->createFormAndHandler($request, $printer);
-
-        if ($form->isSubmitted()) {
-
-            $imageFile = $form['image']->getData();
-            if ($imageFile) {
-                $imageFile = $this->fileUploadService->upload($imageFile);
-                $printer->setImage($imageFile);
-            }
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($printer);
-            $em->flush();
-
-            return $this->redirectToRoute("printer_view",
-                [
-                    'id' => $printer->getId()
-                ]);
-        }
-
-
-        return $this->render('printer/edit.html.twig',
-            [
-                'printer' => $printer,
-                'form' => $form->createView(),
-                'models' => $models,
-                'status' => $status,
-                'companies' => $companies,
-            ]);
-    }
-
-
-    /**
-     * @param int $id
-     * @return RedirectResponse
-     * @throws ORMException
-     * @Route("printers/delete/{id}",name="printer_delete", methods={"GET"})
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     */
-
-    public function delete(int $id)
-    {
-        $this->printerService->delete($id);
-
-        return $this->redirectToRoute(
-            'homepage', []
-        );
-
-    }
-
-
-    /**
      * @Route("/printers/last",name="printer_viewLast")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
@@ -245,6 +241,7 @@ class PrinterController extends Controller
      *
      * @param Request $request
      * @return Response
+     * @throws \Exception
      */
     public function editLastPrinter(Request $request)
     {
@@ -279,24 +276,6 @@ class PrinterController extends Controller
 
 
         return $this->render('printer/viewAll.html.twig',
-            [
-                'printers' => $printers
-            ]);
-    }
-
-    /**
-     * @Route("/test",name="test")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
-     *
-     * @return Response
-     */
-    public function test()
-    {
-        $printers = $this->printerService->findAllDESC();
-
-
-        return $this->render('printer/test.html.twig',
             [
                 'printers' => $printers
             ]);

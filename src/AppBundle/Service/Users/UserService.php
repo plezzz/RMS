@@ -93,8 +93,20 @@ class UserService implements UserServiceInterface
         return $this->userRepository->findAll();
     }
 
+    /**
+     * @return User[]
+     */
     public function findAllTechnician(): array
     {
 
+        $allUsers = $this->userRepository->findAll();
+        $allByRole = [];
+        foreach ($allUsers as $user) {
+            /** @var User $user */
+            if ($case = $user->isTechnician()) {
+                $allByRole [] = $user;
+            }
+        }
+        return $allByRole;
     }
 }

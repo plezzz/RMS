@@ -3,13 +3,10 @@
 namespace AppBundle\Service\Printers;
 
 use AppBundle\Entity\Printer;
-use AppBundle\Form\PrinterType;
 use AppBundle\Repository\PrinterRepository;
 use AppBundle\Service\Company\CompanyServiceInterface;
 use AppBundle\Service\Users\UserServiceInterface;
 use Doctrine\ORM\ORMException;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class PrinterService implements PrinterServiceInterface
 {
@@ -63,14 +60,17 @@ class PrinterService implements PrinterServiceInterface
      * @param Printer $printer
      * @return bool
      * @throws ORMException
+     * @throws \Exception
      */
     public function add(Printer $printer): bool
     {
-        $technician = $this->userService->currentUser();
-        $printer->setTechnician($technician);
+        if($printer->getTechnician()===null){
+            $technician=$this->userService->currentUser();
+            $printer->setTechnician($technician);
+        }
 
-        $status = $this->statusService->findOneBy("Diagnostic");
-        $printer->setPrinterStatus($status);
+        if ($printer->getPrinterStatus()=='Ready')
+            $printer->setDateFinish($printer->setFirstDateAdded());
 
         if ($printer->getSerialNumber() === null)
             $printer->setSerialNumber(1);
@@ -145,9 +145,10 @@ class PrinterService implements PrinterServiceInterface
         $models = $this->modelService->findAll();
         $status = $this->statusService->findAll();
         $companies = $this->companyService->findAll();
+        $technicians = $this->userService->findAllTechnician();
         $printerLast = $this->findLastAdded();
 
-        return $allData = [$models, $status, $companies, $printerLast];
+        return $allData = [$models, $status, $companies,$technicians, $printerLast];
     }
 
     /**

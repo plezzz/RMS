@@ -62,10 +62,28 @@
                                     <input type="checkbox" name="printer[warrantySticker]" id="printer_warranty"  value="false">
                                     <label for="printer_warranty"></label>
                                 </div>
-
                             </div>
-                            <!-- switcher -->
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_showComment">Show Comment</label>
+                            <div class="col-md-8">
 
+                                <div class="switcher">
+                                    <input type="checkbox" name="printer[showComment]" id="printer_showComment"  value="false">
+                                    <label for="printer_showComment"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_Status">Status</label>
+                            <div class="col-md-8">
+                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
+                                        data-style="btn-primary" id="printer_Status" name="printer[printerStatus]">
+                                    {% for statusOne in status %}
+                                        <option value="{{ statusOne.id }}">{{ statusOne.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_problemDescription">Problem
@@ -124,6 +142,25 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_addProtocol">Counter</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="printer_addProtocol" placeholder="Add Protocol"
+                                       name="printer[addProtocol]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_technician">Technician</label>
+                            <div class="col-md-8">
+                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
+                                        data-style="btn-primary" id="printer_technician" name="printer[technician]">
+                                    <option value="null">Not Selected</option>
+                                    {% for technician in technicians %}
+                                        <option value="{{ technician.id }}">{{ technician.fullName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_invoiceDescription">Invoice
                                 Description</label>
                             <div class="col-md-8">
@@ -150,11 +187,4 @@
             </div>
         </form>
     </div>
-    <!-- end #content -->
-    <script>
-        $(document).ready(function() {
-            App.init();
-            FormSliderSwitcher.init();
-        });
-    </script>
 {% endblock %}

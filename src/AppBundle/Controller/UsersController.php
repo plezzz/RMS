@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
 use AppBundle\Service\Users\UserServiceInterface;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +54,6 @@ class UsersController extends Controller
     public function profile()
     {
         $userRepository = $this->getDoctrine()->getRepository(User::class);
-
         $currentUser = $userRepository->find($this->getUser());
 
         return $this->render("users/profile.html.twig",

@@ -74,11 +74,6 @@ class Status
         return $this->name;
     }
 
-    public function __toString()
-    {
-        return $this->name;
-    }
-
     /**
      * @return ArrayCollection
      */
@@ -93,6 +88,11 @@ class Status
     public function setPrinters(ArrayCollection $printers)
     {
         $this->printers = $printers;
+    }
+
+    public function __toString()
+    {
+        return $this->getName();
     }
 }
 

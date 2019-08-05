@@ -41,7 +41,7 @@
                                     <option selected
                                             value="{{ printer.companyName.id }}">{{ printer.companyName }}</option>
                                     {% for company in companies %}
-                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                        <option value="{{ company.id }}">{{ company }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -72,7 +72,21 @@
                                             {{ checkbox }} value="false">
                                     <label for="printer_warranty"></label>
                                 </div>
-
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_showComment">Show Comment</label>
+                            <div class="col-md-8">
+                                <div class="switcher">
+                                        {% if printer.showComment %}
+                                            {% set checkboxComment='checked="checked"' %}
+                                        {% else %}
+                                            {% set checkboxComment='' %}
+                                        {% endif %}
+                                        <input type="checkbox" name="printer[showComment]" id="printer_showComment"
+                                                {{ checkboxComment }} value="false">
+                                    <label for="printer_showComment">  </label>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -80,10 +94,9 @@
                             <div class="col-md-8">
                                 <select class="form-control selectpicker" data-live-search="true" data-size="10"
                                         data-style="btn-primary" id="printer_Status" name="printer[printerStatus]">
-                                    <option selected
-                                            value="{{ printer.printerStatus.id }}">{{ printer.printerStatus.name }}</option>
+                                    <option value="{{ printer.printerStatus.id }}">{{ printer.printerStatus }}</option>
                                     {% for statusOne in status %}
-                                        <option value="{{ statusOne.id }}">{{ statusOne.name }}</option>
+                                        <option value="{{ statusOne.id }}">{{ statusOne }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -149,14 +162,22 @@
                             </div>
                         </div>
                         <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_addProtocol">Counter</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="printer_addProtocol"
+                                       placeholder="Add Protocol"
+                                       name="printer[addProtocol] value="{{ printer.addProtocol }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_technician">Technician</label>
                             <div class="col-md-8">
-                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
-                                        data-style="btn-primary" id="printer_technician" name="printer[technician]">
+                                <select class="form-control selectpicker" data-size="10" name="printer[technician]"
+                                        id="printer_technician" data-live-search="true" data-style="btn-primary">
                                     <option selected
-                                            value="{{ printer.printerStatus.id }}">{{ printer.printerStatus.name }}</option>
-                                    {% for statusOne in status %}
-                                        <option value="{{ statusOne.id }}">{{ statusOne.name }}</option>
+                                            value="{{ printer.technician.id }}">{{ printer.technician }}</option>
+                                    {% for technician in technicians %}
+                                        <option value="{{ technician.id }}">{{ technician }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -170,7 +191,6 @@
                                       id="printer_invoiceDescription"
                                       name="printer[invoiceDescription]"></textarea>
                                 <script>document.getElementById("printer_invoiceDescription").value = "{{ printer.invoiceDescription }}";</script>
-
                             </div>
                         </div>
                         <div class="form-group row">
@@ -179,7 +199,6 @@
                             <textarea class="form-control" rows="6" cols="46" id="printer_Comments"
                                       name="printer[comments]"></textarea>
                                 <script>document.getElementById("printer_Comments").value = "{{ printer.comments }}";</script>
-
                             </div>
                         </div>
                     </div>
@@ -193,10 +212,4 @@
         </form>
     </div>
     <!-- end #content -->
-    <script>
-        $(document).ready(function () {
-            App.init();
-            FormSliderSwitcher.init();
-        });
-    </script>
 {% endblock %}

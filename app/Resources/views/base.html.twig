@@ -85,11 +85,11 @@
                     {% endif %}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="javascript:;" class="dropdown-item">Edit Profile</a>
-                    <a href="javascript:;" class="dropdown-item"><span class="badge badge-danger pull-right">2</span>
+                    <a href="javascript:" class="dropdown-item">Edit Profile</a>
+                    <a href="javascript:" class="dropdown-item"><span class="badge badge-danger pull-right">2</span>
                         Inbox</a>
-                    <a href="javascript:;" class="dropdown-item">Calendar</a>
-                    <a href="javascript:;" class="dropdown-item">Setting</a>
+                    <a href="javascript:" class="dropdown-item">Calendar</a>
+                    <a href="javascript:" class="dropdown-item">Setting</a>
                     <div class="dropdown-divider"></div>
                     <a href="{{ path('security_logout') }}" class="dropdown-item">Log Out</a>
                 </div>
@@ -105,7 +105,7 @@
             <!-- begin sidebar user -->
             <ul class="nav">
                 <li class="nav-profile">
-                    <a href="javascript:;" data-toggle="nav-profile">
+                    <a href="javascript:" data-toggle="nav-profile">
                         <div class="cover with-shadow"></div>
                         <div class="image">
                             <img src="{{ asset('img/user/user-13.jpg') }}" alt=""/>
@@ -122,9 +122,9 @@
                 </li>
                 <li>
                     <ul class="nav nav-profile">
-                        <li><a href="javascript:;"><i class="fa fa-cog"></i> Settings</a></li>
-                        <li><a href="javascript:;"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>
-                        <li><a href="javascript:;"><i class="fa fa-question-circle"></i> Helps</a></li>
+                        <li><a href="javascript:"><i class="fa fa-cog"></i> Settings</a></li>
+                        <li><a href="javascript:"><i class="fa fa-pencil-alt"></i> Send Feedback</a></li>
+                        <li><a href="javascript:"><i class="fa fa-question-circle"></i> Helps</a></li>
                     </ul>
                 </li>
             </ul>
@@ -133,7 +133,7 @@
             <ul class="nav">
                 <li class="nav-header">Navigation</li>
                 <li class="has-sub active">
-                    <a href="javascript:;">
+                    <a href="javascript:">
                         <b class="caret"></b>
                         <i class="fa fa-th-large"></i>
                         <span>Common</span>
@@ -144,7 +144,7 @@
                     </ul>
                 </li>
                 <li class="has-sub">
-                    <a href="javascript:;">
+                    <a href="javascript:">
                         <b class="caret"></b>
                         <i class="fa fa-print"></i>
                         <span>Printer</span>
@@ -164,7 +164,7 @@
                     </ul>
                 </li>
                 <li class="has-sub">
-                    <a href="javascript:;">
+                    <a href="javascript:">
                         <b class="caret"></b>
                         <i class="fa fa-users"></i>
                         <span>User</span>
@@ -182,7 +182,7 @@
                 </li>
 
                 <!-- begin sidebar minify button -->
-                <li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i
+                <li><a href="javascript:" class="sidebar-minify-btn" data-click="sidebar-minify"><i
                                 class="fa fa-angle-double-left"></i></a></li>
                 <!-- end sidebar minify button -->
             </ul>
@@ -249,9 +249,9 @@
             TableManageButtons.init();
             Notification.init();
             GalleryV2.init();
+            FormSliderSwitcher.init();
         });
     </script>
 {% endblock %}
-
 </body>
 </html>

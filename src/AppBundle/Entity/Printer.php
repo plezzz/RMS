@@ -15,6 +15,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Printer
 {
+
+
     /**
      * @var int
      *
@@ -80,6 +82,13 @@ class Printer
      * @ORM\Column(name="warranty_sticker", type="boolean", nullable=true)
      */
     private $warrantySticker = false;
+
+    /**
+     * @var bool
+     *
+     * @ORM\Column(name="show_comment", type="boolean", nullable=true)
+     */
+    private $showComment = false;
 
     /**
      * @var string
@@ -162,12 +171,8 @@ class Printer
 
     public function __construct()
     {
-
-        try {
             $this->dateAdded = $this->setFirstDateAdded();
             $this->dateFinish = $this->setFirstDateFinished();
-        } catch (\Exception $e) {
-        }
     }
 
 
@@ -534,7 +539,7 @@ class Printer
 
     /**
      * @param Company $companyName
-     * @return Company
+     * @return void
      */
     public function setCompanyName(Company $companyName)
     {
@@ -558,9 +563,9 @@ class Printer
     }
 
     /**
-     * @return User
+     * @return
      */
-    public function getTechnician(): User
+    public function getTechnician()
     {
         return $this->technician;
     }
@@ -610,5 +615,21 @@ class Printer
     public function setImage(string $image)
     {
         $this->image = $image;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isShowComment(): bool
+    {
+        return $this->showComment;
+    }
+
+    /**
+     * @param bool $showComment
+     */
+    public function setShowComment(bool $showComment): void
+    {
+        $this->showComment = $showComment;
     }
 }

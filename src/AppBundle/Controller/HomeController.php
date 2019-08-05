@@ -2,14 +2,11 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Service\Company\CompanyServiceInterface;
-use AppBundle\Service\Printers\ModelServiceInterface;
+
 use AppBundle\Service\Printers\PrinterService;
 use AppBundle\Service\Printers\PrinterServiceInterface;
-use AppBundle\Service\Printers\StatusServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends Controller
@@ -20,37 +17,14 @@ class HomeController extends Controller
     private $printerService;
 
     /**
-     * @var PrinterService
-     */
-    private $companyService;
-
-    /**
-     * @var ModelServiceInterface
-     */
-    private $modelService;
-
-    /**
-     * @var StatusServiceInterface
-     */
-    private $statusService;
-
-    /**
-     * CarController constructor.
-     * @param ModelServiceInterface $modelService
-     * @param StatusServiceInterface $statusService
+     * HomeController constructor.
      * @param PrinterServiceInterface $printerService
-     * @param CompanyServiceInterface $companyService
      */
-    public function __construct(ModelServiceInterface $modelService,
-                                StatusServiceInterface $statusService,
-                                PrinterServiceInterface $printerService,
-                                CompanyServiceInterface $companyService)
+    public function __construct(PrinterServiceInterface $printerService)
     {
-        $this->modelService = $modelService;
-        $this->statusService = $statusService;
         $this->printerService = $printerService;
-        $this->companyService = $companyService;
     }
+
     /**
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Route("/homepage", name="homepage")

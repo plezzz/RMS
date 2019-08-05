@@ -6,7 +6,7 @@
     <div id="content" class="content">
         <!-- begin breadcrumb -->
         <ol class="breadcrumb hidden-print pull-right">
-            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
             <li class="breadcrumb-item">Printer Details</li>
         </ol>
         <!-- end breadcrumb -->
@@ -38,7 +38,7 @@
                 <div class="invoice-to">
                     <small>Model</small>
                     <address class="m-t-5 m-b-5">
-                        <strong class="text-inverse">{{ printer.model }}</strong><br/>
+                        <strong class="text-inverse">{{ printer.model.name }}</strong><br/>
                     </address>
                 </div>
                 <div class="invoice-date">
@@ -58,10 +58,10 @@
                         <small>Serial Number</small> <span class="f-w-600">{{ printer.serialNumber }}</span>
                     </div>
                     <div class="invoice-price-right">
-                        <small>Status</small> <span class="f-w-600">{{ printer.printerStatus }}</span>
+                        <small>Status</small> <span class="f-w-600">{{ printer.printerStatus.name }}</span>
                     </div>
                     <div class="invoice-price-right">
-                        <small>Technician</small> <span class="f-w-600">{{ printer.technician.fullname }}</span>
+                        <small>Technician</small> <span class="f-w-600">{{ printer.technician }}</span>
                     </div>
                 </div>
             </div>
@@ -90,6 +90,16 @@
                             <small>Warranty Sticker</small>
                             <span class="text-inverse">
                                 {% if printer.warrantySticker %}
+                                    <span class="label label-danger">Yes</span>
+                                    {% else %}
+                                    <span class="label label-info">No</span>
+                                {% endif %}
+                            </span>
+                        </div>
+                        <div class="sub-price">
+                            <small>Show comment</small>
+                            <span class="text-inverse">
+                                {% if printer.showComment %}
                                     <span class="label label-danger">Yes</span>
                                     {% else %}
                                     <span class="label label-info">No</span>
@@ -151,8 +161,8 @@
             <!-- begin superbox -->
             <div class="superbox " data-offset="50">
                 <div class="superbox-list">
-                    <a href="javascript:;" class="superbox-img">
-                        <img data-img="{{ asset('images/clientPrinterImages/' ~ printer.image) }}"/>
+                    <a href="javascript:" class="superbox-img">
+                        <img alt="Image client" data-img="{{ asset('images/clientPrinterImages/' ~ printer.image) }}"/>
                         <span style="background: url({{ asset('images/clientPrinterImages/' ~ printer.image) }});"></span>
                     </a>
                 </div>
@@ -196,7 +206,7 @@
                             <td class="text-center">{{ printerOne.cartridge }}</td>
                             <td class="text-center">{{ printerOne.customerPrice }}</td>
                             <td class="text-center">{{ printerOne.counter }}</td>
-                            <td class="text-center">{{ printerOne.technician.fullname }}</td>
+                            <td class="text-center">{{ printerOne.technician }}</td>
                             <td class="text-center">
                                 <a href="{{ path('printer_view', {'id': printerOne.id}) }}">
                                     <button type="button" class="btn btn-success">View</button>
