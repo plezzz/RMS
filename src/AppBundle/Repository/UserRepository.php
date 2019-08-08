@@ -42,4 +42,19 @@ class UserRepository extends EntityRepository
             return false;
         }
     }
+
+    /**
+     * @param string $name
+     * @return mixed
+     */
+    public function getByRoleName(string $name)
+    {
+        return $this->createQueryBuilder('u')
+            ->addSelect('r.name')
+            ->innerJoin('u.roles','r')
+            ->where('r.title=:name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+    }
 }

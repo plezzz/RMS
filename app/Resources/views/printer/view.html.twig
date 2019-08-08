@@ -1,7 +1,6 @@
 {% extends 'base.html.twig' %}
 
 {% block main %}
-
     <!-- begin #content -->
     <div id="content" class="content">
         <!-- begin breadcrumb -->
@@ -11,7 +10,7 @@
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
-        <h1 class="page-header hidden-print">Priter Details <small>header small text goes here...</small></h1>
+        <h1 class="page-header hidden-print">Printer Details <small>header small text goes here...</small></h1>
         <!-- end page-header -->
         <!-- begin invoice -->
         <div class="invoice">
@@ -32,13 +31,13 @@
                 <div class="invoice-from">
                     <small>Model Image</small>
                     <address class="m-t-5 m-b-5">
-                        <img alt="printer Image" src="{{ printer.getModel.getImageUrl }}" width="150"/>
+                        <img alt="printer Image" src="{{ asset('images/models/') }}{{ printer.model.image }}" width="150"/>
                     </address>
                 </div>
                 <div class="invoice-to">
                     <small>Model</small>
                     <address class="m-t-5 m-b-5">
-                        <strong class="text-inverse">{{ printer.model.name }}</strong><br/>
+                        <strong class="text-inverse">{{ printer.model }}</strong><br/>
                     </address>
                 </div>
                 <div class="invoice-date">
@@ -117,13 +116,13 @@
             <div class="row">
                 <!-- begin col-6 -->
                 <div class="col-md-12">
-                    <div class="m-b-10 f-s-10 m-t-5"><b class="text-inverse">CARD GROUPS</b></div>
+                    <div class="m-b-10 f-s-16 m-t-5"><b class="text-inverse">Descriptions</b></div>
                     <!-- begin card-group -->
                     <div class="card-group">
                         <!-- begin card -->
                         <div class="card">
                             <div class="card-block">
-                                <h4 class="card-title">Problem Description</h4>
+                                <h4 class="card-title">Problem</h4>
                                 <p class="card-text">{{ printer.problemDescription }}</p>
                             </div>
                         </div>
@@ -139,7 +138,7 @@
                         <!-- begin card -->
                         <div class="card">
                             <div class="card-block">
-                                <h4 class="card-title">Invoice Description</h4>
+                                <h4 class="card-title">Invoice</h4>
                                 <p class="card-text">{{ printer.invoiceDescription }}</p>
                             </div>
                         </div>
@@ -162,8 +161,8 @@
             <div class="superbox " data-offset="50">
                 <div class="superbox-list">
                     <a href="javascript:" class="superbox-img">
-                        <img alt="Image client" data-img="{{ asset('images/clientPrinterImages/' ~ printer.image) }}"/>
-                        <span style="background: url({{ asset('images/clientPrinterImages/' ~ printer.image) }});"></span>
+                        <img alt="Image client" data-img="{{ asset('images/clientPrinters/' ~ printer.image) }}"/>
+                        <span style="background: url({{ asset('images/clientPrinters/' ~ printer.image) }});"></span>
                     </a>
                 </div>
             </div>

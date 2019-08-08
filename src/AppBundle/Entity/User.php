@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use DateTime;
-use DateTimeZone;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -107,14 +106,18 @@ class User implements UserInterface
      */
     private $dateAdded;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Model", mappedBy="userAdded")
+     */
+    private $models;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->printers = new ArrayCollection();
-        try {
-            $this->dateAdded = $this->dateAdded();
-        } catch (\Exception $e) {
-        }
+        $this->models = new ArrayCollection();
     }
 
     /**
@@ -224,7 +227,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->email;
     }
@@ -232,7 +235,7 @@ class User implements UserInterface
     /**
      * @param string $email
      */
-    public function setEmail(string $email): void
+    public function setEmail(string $email)
     {
         $this->email = $email;
     }
@@ -272,7 +275,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getFullName(): string
+    public function getFullName()
     {
         return $this->fullName;
     }
@@ -280,7 +283,7 @@ class User implements UserInterface
     /**
      * @param string $fullName
      */
-    public function setFullName(string $fullName): void
+    public function setFullName(string $fullName)
     {
         $this->fullName = $fullName;
     }
@@ -289,7 +292,7 @@ class User implements UserInterface
     /**
      * @return Company
      */
-    public function getCompanyName(): Company
+    public function getCompanyName()
     {
         return $this->companyName;
     }
@@ -297,7 +300,7 @@ class User implements UserInterface
     /**
      * @param Company $companyName
      */
-    public function setCompanyName(Company $companyName): void
+    public function setCompanyName(Company $companyName)
     {
         $this->companyName = $companyName;
     }
@@ -331,27 +334,15 @@ class User implements UserInterface
     /**
      * @param DateTime $dateAdded
      */
-    public function setDateAdded(DateTime $dateAdded): void
+    public function setDateAdded(DateTime $dateAdded)
     {
         $this->dateAdded = $dateAdded;
     }
 
     /**
-     * @return DateTime
-     * @throws \Exception
-     */
-    public function dateAdded()
-    {
-        $timeZone = new DateTimeZone('Europe/Sofia');
-        $datetime = new DateTime('now');
-        $datetime->setTimezone($timeZone);
-        return $datetime;
-    }
-
-    /**
      * @param string $username
      */
-    public function setUsername(string $username): void
+    public function setUsername(string $username)
     {
         $this->username = $username;
     }
@@ -359,7 +350,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getMobilePhone(): string
+    public function getMobilePhone()
     {
         return $this->mobilePhone;
     }
@@ -367,7 +358,7 @@ class User implements UserInterface
     /**
      * @param string $mobilePhone
      */
-    public function setMobilePhone(string $mobilePhone): void
+    public function setMobilePhone(string $mobilePhone)
     {
         $this->mobilePhone = $mobilePhone;
     }
@@ -375,7 +366,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getExternalPhone(): string
+    public function getExternalPhone()
     {
         return $this->externalPhone;
     }
@@ -383,7 +374,7 @@ class User implements UserInterface
     /**
      * @param string $externalPhone
      */
-    public function setExternalPhone(string $externalPhone): void
+    public function setExternalPhone(string $externalPhone)
     {
         $this->externalPhone = $externalPhone;
     }
@@ -391,7 +382,7 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getExtensionPhone(): string
+    public function getExtensionPhone()
     {
         return $this->extensionPhone;
     }
@@ -399,14 +390,35 @@ class User implements UserInterface
     /**
      * @param string $extensionPhone
      */
-    public function setExtensionPhone(string $extensionPhone): void
+    public function setExtensionPhone(string $extensionPhone)
     {
         $this->extensionPhone = $extensionPhone;
     }
 
+    /**
+     * @return ArrayCollection
+     */
+    public function getModels(): ArrayCollection
+    {
+        return $this->models;
+    }
+
+    /**
+     * @param ArrayCollection $models
+     */
+    public function setModels(ArrayCollection $models): void
+    {
+        $this->models = $models;
+    }
+
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getFullName();
     }
+
 }
 

@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <!-- begin #content -->
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb hidden-print pull-right">
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item">Printer Details</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header hidden-print">Printer Details <small>header small text goes here...</small></h1>
+        <!-- end page-header -->
+        <!-- begin invoice -->
+        <div class="invoice">
+            <!-- begin invoice-company -->
+            <div class="invoice-company text-inverse f-w-600">
+                    <span class="pull-right hidden-print">
+
+                        <a href="{{ path('homepage', {'id': model.id}) }}"><button type="button" class="btn btn-lime">Edit</button></a>
+							<a href="#" input="3" data-text="4" data-click="swal-danger"
+                               class="btn btn-danger">Delete</a>
+                        <input type="hidden" id="printerId" value="{{ model.id }}">
+
+                    </span>
+                {{ model.brand }} {{ model.name }}
+            </div>
+            <!-- end invoice-company -->
+            <!-- begin invoice-header -->
+            <div class="invoice-header">
+                <div class="invoice-from">
+                    <small>Model Image</small>
+                    <address class="m-t-5 m-b-5">
+                        <img alt="printer Image" src="{{ asset('images/models/')}}{{ model.image }}" width="150"/>
+                    </address>
+                </div>
+                <div class="invoice-to">
+                    <small>Model</small>
+                    <address class="m-t-5 m-b-5">
+                        <strong class="text-inverse">{{ model.brand }} {{ model.name }}</strong><br/>
+                    </address>
+                </div>
+                <div class="invoice-date">
+                    <address class="m-t-5 m-b-5">
+                        <small>Date Added</small>
+                        <div class="date text-inverse m-t-5">{{ model.dateAdded|date("d.m.Y H:i") }}</div>
+                        <small>User Added</small>
+                        <div class="date text-inverse m-t-5">{{ model.userAdded }}</div>
+                    </address>
+                </div>
+            </div>
+            <!-- end invoice-header -->
+        </div>
+        <!-- end printers with same serial number -->
+    </div>
+    <!-- end invoice-content -->
+    <!-- end invoice -->
+    <!-- end #content -->
+
+{% endblock %}
+

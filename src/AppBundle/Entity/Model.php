@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -39,9 +40,16 @@ class Model
     /**
      * @var string
      *
-     *  @ORM\Column(name="image_url", type="text")
+     * @ORM\Column(name="image", type="text")
      */
-    private $imageURL;
+    private $image;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="date_added", type="datetime")
+     */
+    private $dateAdded;
 
     /**
      * @var ArrayCollection
@@ -49,6 +57,14 @@ class Model
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Printer", mappedBy="model")
      */
     private $printers;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="models")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id" )
+     */
+    private $userAdded;
 
     public function __construct()
     {
@@ -93,23 +109,7 @@ class Model
     /**
      * @return string
      */
-    public function getImageURL(): string
-    {
-        return $this->imageURL;
-    }
-
-    /**
-     * @param string $imageURL
-     */
-    public function setImageURL(string $imageURL): void
-    {
-        $this->imageURL = $imageURL;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getName()
     {
         return $this->name;
     }
@@ -117,7 +117,7 @@ class Model
     /**
      * @param string $name
      */
-    public function setName(string $name): void
+    public function setName(string $name)
     {
         $this->name = $name;
     }
@@ -133,14 +133,67 @@ class Model
     /**
      * @param ArrayCollection $printers
      */
-    public function setPrinters(ArrayCollection $printers): void
+    public function setPrinters(ArrayCollection $printers)
     {
         $this->printers = $printers;
     }
 
+    public function getModel()
+    {
+        return $this->brand . " " . $this->getName();
+    }
+
+    /**
+     * @return string
+     */
+    public function getDateAdded()
+    {
+        return $this->dateAdded;
+    }
+
+    /**
+     * @param DateTime $dateAdded
+     */
+    public function setDateAdded(DateTime $dateAdded)
+    {
+        $this->dateAdded=$dateAdded;
+    }
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     */
+    public function setImage(string $image)
+    {
+        $this->image = $image;
+    }
+
     public function __toString()
     {
-        return $this->getName();
+        return $this->brand . " " . $this->getName();
+    }
+
+    /**
+     * @return User
+     */
+    public function getUserAdded(): User
+    {
+        return $this->userAdded;
+    }
+
+    /**
+     * @param User $userAdded
+     */
+    public function setUserAdded(User $userAdded): void
+    {
+        $this->userAdded = $userAdded;
     }
 }
 

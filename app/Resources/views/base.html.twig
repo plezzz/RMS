@@ -45,7 +45,6 @@
 <body id="{% block body_id %}{% endblock %}">
 
 {% block header %}
-
     <!-- begin #page-loader -->
     <div id="page-loader" class="fade show"><span class="spinner"></span></div>
 <!-- end #page-loader -->
@@ -64,7 +63,6 @@
             </button>
         </div>
         <!-- end navbar-header -->
-
         <!-- begin header-nav -->
         <ul class="navbar-nav navbar-right">
             <li>
@@ -80,9 +78,7 @@
             <li class="dropdown navbar-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     <img src="{{ asset('img/user/user-13.jpg') }}" alt=""/>
-                    {% if app.user %} }}
-                        <span class="d-none d-md-inline">{{ app.user.fullName }}</span> <b class="caret"></b>
-                    {% endif %}
+                    <span class="d-none d-md-inline">{{ app.user.fullName }}</span> <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <a href="javascript:" class="dropdown-item">Edit Profile</a>
@@ -114,7 +110,7 @@
                             <b class="caret pull-right"></b>
                             {{ app.user.fullName }}
                             <small>{% for role in app.user.roles %}
-                                    {{ role }}
+                                    {{ role | split("_")[1] }}<br>
                                 {% endfor %}
                             </small>
                         </div>
@@ -161,6 +157,13 @@
                         <li><a href="{{ path('printer_editLast') }}">Edit<span
                                         class="label label-theme m-l-5">LAST</span></a>
                         </li>
+                        <li class="has-sub">
+                            <a href="javascript:"><b class="caret pull-right"></b> Models</a>
+                            <ul class="sub-menu">
+                                <li><a href="{{ path('add_model') }}">Add <i
+                                                class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
                 <li class="has-sub">
@@ -170,8 +173,8 @@
                         <span>User</span>
                     </a>
                     <ul class="sub-menu">
-                        <li><a href="{{ path('add_printer') }}">Add <i
-                                        class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                        <li><a href="{{ path('user_register') }}">Add <i class="fa fa-paper-plane text-theme m-l-5"></i></a>
+                        </li>
                         <li><a href="{{ path('printer_view_all') }}">View<span
                                         class="label label-theme m-l-5">ALL</span></a>
                         </li>
@@ -180,7 +183,6 @@
                         </li>
                     </ul>
                 </li>
-
                 <!-- begin sidebar minify button -->
                 <li><a href="javascript:" class="sidebar-minify-btn" data-click="sidebar-minify"><i
                                 class="fa fa-angle-double-left"></i></a></li>

@@ -1,57 +1,119 @@
 {% extends 'base.html.twig' %}
 
-{% block body_id 'register' %}
-
 {% block main %}
-    <div class="container body-content span=8 offset=2">
-        <div class="well">
-            <form class="form-horizontal" action="{{ path('user_register') }}" method="post">
-                <fieldset>
-                    <legend>Register</legend>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="user_email">Email</label>
-                        <div class="col-sm-4 ">
-                            <input class="form-control" id="user_email" placeholder="Email" name="user[email]" required
-                                   type="email">
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb pull-right">
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Page Options</a></li>
+            <li class="breadcrumb-item active">Register User</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header">Register user <small>header small text goes here...</small></h1>
+        <!-- end page-header -->
+        <form class="form-horizontal form-bordered action" name="user" method="POST"
+              enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-6"
+                     style="background: #FFFFFF">
+                    <!-- begin panel-body -->
+                    <div class="panel-body panel-form">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_email">Email</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="user_email" placeholder="Email"
+                                       name="user[email]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="printer_fullName">Full Name</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="printer_fullName" placeholder="Full Name"
+                                       name="user[fullName]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_username">Username</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="user_username" placeholder="Username"
+                                       name="user[username]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_password_first">Password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="user_password_first"
+                                       placeholder="Password" name="user[password][first]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_password_second">Repeat password</label>
+                            <div class="col-md-8">
+                                <input type="password" class="form-control" id="user_password_second"
+                                       placeholder="Password" name="user[password][second]">
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="user_companyName">Company Name</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="user_companyName" placeholder="Company Name"
-                                   name="user[companyName]" required>
+                </div>
+                <div class="col-lg-6" style="background: #FFFFFF">
+                    <!-- begin panel-body -->
+                    <div class="panel-body panel-form">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_companyName">Company Name</label>
+                            <div class="col-md-8">
+                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
+                                        data-style="btn-primary" id="user_companyName" name="user[companyName]">
+                                    {% for company in companies %}
+                                        <option value="{{ company.id }}">{{ company.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_mobilePhone">Mobile phone</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="user_mobilePhone" placeholder="Mobile phone"
+                                       name="user[mobilePhone]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_externalPhone">External Phone</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="user_externalPhone"
+                                       placeholder="External Phone" name="user[externalPhone]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_extensionPhone">Extension phone</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="user_extensionPhone"
+                                       placeholder="Extension Phone" name="user[extensionPhone]">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="user_Аssigned">Аssigned Тo</label>
+                            <div class="col-md-8">
+                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
+                                        data-style="btn-primary" id="user_Аssigned" name="printer[assigned]">
+                                    <option value="null">Not Selected</option>
+                                    {% for account in accounts %}
+                                        <option value="{{ account.0.id }}">{{ account.0.fullName }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="user_fullName">Full Name</label>
-                        <div class="col-sm-4 ">
-                            <input type="text" class="form-control" id="user_companyName" placeholder="Full Name"
-                                   name="user[fullName]" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="user_password_first">Password</label>
-                        <div class="col-sm-4">
-                            <input type="password" class="form-control" id="user_password_first" placeholder="Password"
-                                   name="user[password][first]" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label" for="user_password_second">Confirm Password</label>
-                        <div class="col-sm-4">
-                            <input type="password" class="form-control" id="user_password_second" placeholder="Password"
-                                   name="user[password][second]" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-4 col-sm-offset-4">
-                            <a class="btn btn-primary" href="{{ path('homepage') }}">Cancel</a>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </div>
-                    </div>
-                    {{ form_row(form._token) }}
-                </fieldset>
-            </form>
-        </div>
+                </div>
+            </div>
+            <hr>
+            {{ form_row(form._token) }}
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-default" href="{{ path('homepage') }}">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <br>
+        </form>
     </div>
 {% endblock %}
+

@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\User;
 use AppBundle\Form\UserType;
+use AppBundle\Service\Company\CompanyServiceInterface;
 use AppBundle\Service\Users\UserServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,28 +19,47 @@ class UsersController extends Controller
      */
     private $userService;
 
-    public function __construct(UserServiceInterface $userService)
+    /**
+     * @var CompanyServiceInterface
+     */
+    private $companyService;
+
+    public function __construct(UserServiceInterface $userService,
+                                CompanyServiceInterface $companyService)
     {
         $this->userService = $userService;
+        $this->companyService = $companyService;
     }
 
     /**
-     * @Route("register", name="user_register", methods={"GET"})
+     * @Route("/user/register", name="user_register", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @return Response
      */
     public function register()
     {
+        $accounts = $this->userService->findAllUsersByRole('Account');
+        $companies = $this->companyService->findAll();
+        $form = $this->createForm(UserType::class)->createView();
+
         return $this->render("users/register.html.twig",
-            ['form' => $this->createForm(UserType::class)->createView()]);
+            [
+                'form' => $form,
+                'companies' => $companies,
+                'accounts' => $accounts
+
+            ]);
     }
 
     /**
-     * @Route("register", methods={"POST"})
+     * @Route("/user/register", methods={"POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @param Request $request
      * @return Response
      */
     public function registerProcess(Request $request)
     {
+
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);

@@ -5,7 +5,6 @@ namespace AppBundle\Service\Common;
 
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Transliterator;
 
 class FileUploaderService
 {
@@ -16,7 +15,7 @@ class FileUploaderService
         $this->targetDirectory = $targetDirectory;
     }
 
-    public function upload(UploadedFile $file)
+    public function upload(UploadedFile $file,$type ='generally')
     {
 
         $originalFilename = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -24,7 +23,7 @@ class FileUploaderService
         $fileName = $safeFilename . '-' . uniqid() . '.' . $file->guessExtension();
 
         try {
-            $file->move($this->getTargetDirectory(), $fileName);
+            $file->move($this->getTargetDirectory().$type, $fileName);
         } catch (FileException $e) {
         }
 

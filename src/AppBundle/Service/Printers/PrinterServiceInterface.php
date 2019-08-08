@@ -4,12 +4,12 @@
 namespace AppBundle\Service\Printers;
 
 use AppBundle\Entity\Printer;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\FormInterface;
 
 interface PrinterServiceInterface
 {
-    public function add(Printer $printer): bool;
-    public function edit(Printer $printer): bool;
+    public function add(Printer $printer,FormInterface $form): bool;
+    public function edit(Printer $printer,FormInterface $form): bool;
     public function delete(int $id): bool;
     public function getData():array;
     public function findAll():array;

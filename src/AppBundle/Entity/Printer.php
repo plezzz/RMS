@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use DateTime;
-use DateTimeZone;
 use Doctrine\ORM\Mapping as ORM;
 
 
@@ -15,8 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Printer
 {
-
-
     /**
      * @var int
      *
@@ -171,8 +168,7 @@ class Printer
 
     public function __construct()
     {
-            $this->dateAdded = $this->setFirstDateAdded();
-            $this->dateFinish = $this->setFirstDateFinished();
+
     }
 
 
@@ -502,7 +498,7 @@ class Printer
     /**
      * @param DateTime $dateAdded
      */
-    public function setDateAdded(DateTime $dateAdded): void
+    public function setDateAdded(DateTime $dateAdded)
     {
         $this->dateAdded = $dateAdded;
     }
@@ -576,29 +572,6 @@ class Printer
     public function setTechnician(User $technician)
     {
         $this->technician = $technician;
-    }
-
-
-    /**
-     * @return DateTime
-     * @throws \Exception
-     */
-    public function setFirstDateAdded()
-    {
-        $timeZone = new DateTimeZone('Europe/Sofia');
-        $datetime = new DateTime('now');
-        $datetime->setTimezone($timeZone);
-        return $datetime;
-    }
-
-    /**
-     * @return DateTime
-     * @throws \Exception
-     */
-    public function setFirstDateFinished()
-    {
-        $dateFinish = new DateTime('0000-00-00 00:00:00');
-        return $dateFinish;
     }
 
     /**

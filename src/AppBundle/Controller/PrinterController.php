@@ -3,13 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Form\PrinterType;
-use AppBundle\Service\Common\FileUploaderService;
-use AppBundle\Service\Company\CompanyServiceInterface;
-use AppBundle\Service\Printers\ModelServiceInterface;
+use AppBundle\Service\Common\VerificationsServiceInterface;
 use AppBundle\Service\Printers\PrinterService;
 use AppBundle\Service\Printers\PrinterServiceInterface;
-use AppBundle\Service\Printers\StatusServiceInterface;
-use AppBundle\Service\Users\UserServiceInterface;
 use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Printer;
@@ -23,58 +19,26 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PrinterController extends Controller
 {
-
-    /**
-     * @var ModelServiceInterface
-     */
-    private $modelService;
-
-    /**
-     * @var StatusServiceInterface
-     */
-    private $statusService;
-
     /**
      * @var PrinterService
      */
     private $printerService;
-    /**
-     * @var PrinterService
-     */
-    private $companyService;
 
     /**
-     * @var FileUploaderService
+     * @var VerificationsServiceInterface
      */
-    private $fileUploadService;
-
-    /**
-     * @var UserServiceInterface
-     */
-    private $userService;
+    private $verificationsService;
 
     /**
      * PrinterController constructor.
-     * @param ModelServiceInterface $modelService
-     * @param StatusServiceInterface $statusService
      * @param PrinterServiceInterface $printerService
-     * @param CompanyServiceInterface $companyService
-     * @param FileUploaderService $fileUploadService
-     * @param UserServiceInterface $userService
+     * @param VerificationsServiceInterface $verificationsService
      */
-    public function __construct(ModelServiceInterface $modelService,
-                                StatusServiceInterface $statusService,
-                                PrinterServiceInterface $printerService,
-                                CompanyServiceInterface $companyService,
-                                FileUploaderService $fileUploadService,
-                                UserServiceInterface $userService)
+    public function __construct(PrinterServiceInterface $printerService,
+                                VerificationsServiceInterface $verificationsService)
     {
-        $this->modelService = $modelService;
-        $this->statusService = $statusService;
         $this->printerService = $printerService;
-        $this->companyService = $companyService;
-        $this->fileUploadService = $fileUploadService;
-        $this->userService = $userService;
+        $this->verificationsService = $verificationsService;
     }
 
     /**
@@ -87,7 +51,7 @@ class PrinterController extends Controller
      */
     public function create(Request $request)
     {
-        /** @var Printer $printerLast**/
+        /** @var Printer $printerLast * */
         list($models, $status, $companies, $technicians, $printerLast) = $this->printerService->getData();
         $newBatch = intval($printerLast->getBatch()) + 1;
 
@@ -119,13 +83,7 @@ class PrinterController extends Controller
         $printer = new Printer();
         $form = $this->createFormAndHandler($request, $printer);
 
-        $imageFile = $form['image']->getData();
-        if ($imageFile) {
-            $imageFile = $this->fileUploadService->upload($imageFile);
-            $printer->setImage($imageFile);
-        }
-
-        $this->printerService->add($printer);
+        $this->printerService->add($printer, $form);
 
         return $this->redirectToRoute(
             'printer_view', ['id' => $printer->getId()]
@@ -133,7 +91,7 @@ class PrinterController extends Controller
     }
 
     /**
-     * @Route("/printer/edit/{id}", name="printer_edit")
+     * @Route("/printer/edit/{id}", name="printer_edit", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      *
      * @param $id
@@ -147,30 +105,10 @@ class PrinterController extends Controller
         list($models, $status, $companies, $technicians) = $this->printerService->getData();
 
         if ($printer === null) {
-            return $this->redirectToRoute("homepage");
+            $this->redirectToRoute("homepage");
         }
+
         $form = $this->createFormAndHandler($request, $printer);
-
-        if ($form->isSubmitted()) {
-
-            $imageFile = $form['image']->getData();
-            if ($imageFile) {
-                $imageFile = $this->fileUploadService->upload($imageFile);
-                $printer->setImage($imageFile);
-            }
-
-            if ($printer->getPrinterStatus()=='Ready')
-                $printer->setDateFinish($printer->setFirstDateAdded());
-
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($printer);
-            $em->flush();
-
-            return $this->redirectToRoute("printer_view",
-                [
-                    'id' => $printer->getId()
-                ]);
-        }
 
         return $this->render('printer/edit.html.twig',
             [
@@ -179,7 +117,30 @@ class PrinterController extends Controller
                 'models' => $models,
                 'status' => $status,
                 'companies' => $companies,
-                'technicians'=>$technicians
+                'technicians' => $technicians
+            ]);
+    }
+
+    /**
+     * @Route("/printer/edit/{id}", methods={"POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param $id
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function editPrinterProcess($id, Request $request)
+    {
+        $printer = $this->printerService->findOneByID($id);
+
+        $form = $this->createFormAndHandler($request, $printer);
+
+        $this->printerService->edit($printer, $form);
+
+        return $this->redirectToRoute("printer_view",
+            [
+                'id' => $printer->getId()
             ]);
     }
 

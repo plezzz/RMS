@@ -5,12 +5,12 @@ namespace AppBundle\Service\Users;
 
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
+use AppBundle\Service\Common\DateTimeServiceInterface;
 use AppBundle\Service\Encryption\ArgonEncryption;
 use AppBundle\Service\Roles\RoleServiceInterface;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
-
 /**
  * @method getDoctrine()
  */
@@ -21,17 +21,19 @@ class UserService implements UserServiceInterface
     private $userRepository;
     private $encryptionService;
     private $roleService;
+    private $dateTimeService;
 
     public function __construct(Security $security,
-                               UserRepository $userRepository,
+                                UserRepository $userRepository,
                                 ArgonEncryption $encryptionService,
-                               RoleServiceInterface $roleService)
+                                RoleServiceInterface $roleService,
+                                DateTimeServiceInterface $dateTimeService)
     {
         $this->security = $security;
         $this->userRepository = $userRepository;
         $this->encryptionService = $encryptionService;
         $this->roleService = $roleService;
-
+        $this->dateTimeService = $dateTimeService;
     }
 
     /**
@@ -52,6 +54,8 @@ class UserService implements UserServiceInterface
     {
         $passwordHash = $this->encryptionService->hash($user->getPassword());
         $user->setPassword($passwordHash);
+
+        $user->setDateAdded($this->dateTimeService->setDateTimeNow());
 
         $userRole = $this->roleService->findOneBy("ROLE_USER");
         $user->addRole($userRole);
@@ -93,20 +97,15 @@ class UserService implements UserServiceInterface
         return $this->userRepository->findAll();
     }
 
+
     /**
+     * @param $criteria
      * @return User[]
      */
-    public function findAllTechnician(): array
+    public function findAllUsersByRole($criteria): array
     {
-
-        $allUsers = $this->userRepository->findAll();
-        $allByRole = [];
-        foreach ($allUsers as $user) {
-            /** @var User $user */
-            if ($case = $user->isTechnician()) {
-                $allByRole [] = $user;
-            }
-        }
-        return $allByRole;
+        return $this->userRepository->getByRoleName($criteria);
     }
+
+
 }

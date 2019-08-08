@@ -2,7 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Model;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,14 +17,19 @@ class ModelType extends AbstractType
     {
         $builder
             ->add('brand')
-            ->add('name');
+            ->add('name')
+            ->add('image', FileType::class, [
+                'label' => 'Image (Image file)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                ],
+            ]);
     }/**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Model'
-        ));
+        $resolver->setDefaults(['data_class' => Model::class]);
     }
 }

@@ -12,10 +12,11 @@
         <!-- begin page-header -->
         <h1 class="page-header">Add printer <small>header small text goes here...</small></h1>
         <!-- end page-header -->
-        <form class="form-horizontal form-bordered action=" {{ path('add_printer') }} method="POST"
+        <form class="form-horizontal form-bordered action" method="POST"
               enctype="multipart/form-data">
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-6"
+                     style="background: #FFFFFF">
                     <!-- begin panel-body -->
                     <div class="panel-body panel-form">
                         <div class="form-group row">
@@ -59,7 +60,8 @@
                             <div class="col-md-8">
 
                                 <div class="switcher">
-                                    <input type="checkbox" name="printer[warrantySticker]" id="printer_warranty"  value="false">
+                                    <input type="checkbox" name="printer[warrantySticker]" id="printer_warranty"
+                                           value="false">
                                     <label for="printer_warranty"></label>
                                 </div>
                             </div>
@@ -69,7 +71,8 @@
                             <div class="col-md-8">
 
                                 <div class="switcher">
-                                    <input type="checkbox" name="printer[showComment]" id="printer_showComment"  value="false">
+                                    <input type="checkbox" name="printer[showComment]" id="printer_showComment"
+                                           value="false">
                                     <label for="printer_showComment"></label>
                                 </div>
                             </div>
@@ -102,7 +105,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-6"  style="background: #FFFFFF">
                     <!-- begin panel-body -->
                     <div class="panel-body panel-form">
                         <div class="form-group row">
@@ -142,9 +145,10 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-3 col-form-label" for="printer_addProtocol">Counter</label>
+                            <label class="col-md-3 col-form-label" for="printer_addProtocol">Add Protocol</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="printer_addProtocol" placeholder="Add Protocol"
+                                <input type="text" class="form-control" id="printer_addProtocol"
+                                       placeholder="Add Protocol"
                                        name="printer[addProtocol]">
                             </div>
                         </div>
@@ -155,7 +159,7 @@
                                         data-style="btn-primary" id="printer_technician" name="printer[technician]">
                                     <option value="null">Not Selected</option>
                                     {% for technician in technicians %}
-                                        <option value="{{ technician.id }}">{{ technician.fullName }}</option>
+                                        <option value="{{ technician.0.id }}">{{ technician.0.fullName }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
@@ -180,11 +184,13 @@
                     </div>
                 </div>
             </div>
+            <hr>
             {{ form_row(form._token) }}
             <div class="col-sm-4 col-sm-offset-4">
                 <a class="btn btn-default" href="{{ path('homepage') }}">Cancel</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
+            <br>
         </form>
     </div>
 {% endblock %}

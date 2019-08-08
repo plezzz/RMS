@@ -51,8 +51,23 @@ class PrinterRepository extends EntityRepository
     public function delete(Printer $printer)
     {
         try {
-
             $this->_em->remove($printer);
+            $this->_em->flush();
+            return true;
+        } catch (OptimisticLockException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param Printer $printer
+     * @return bool
+     * @throws ORMException
+     */
+    public function update(Printer $printer)
+    {
+        try {
+            $this->_em->merge($printer);
             $this->_em->flush();
             return true;
         } catch (OptimisticLockException $e) {

@@ -3,6 +3,7 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Printer;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
@@ -21,7 +22,12 @@ class PrinterType extends AbstractType
     {
         $builder
             ->add('batch', TextType::class)
-            ->add('model')
+            ->add('model', EntityType::class,
+                [
+                    'class' => 'AppBundle\Entity\Model',
+                    'choice_label' => 'model'
+
+                ])
             ->add('companyName')
             ->add('technician')
             ->add('problemDescription', TextareaType::class)
