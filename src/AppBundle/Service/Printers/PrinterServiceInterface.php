@@ -16,7 +16,8 @@ interface PrinterServiceInterface
     public function findAllDESC():array;
     public function findAllBySerialNumber(string $serialNumber): array;
     public function findAllByTechnician(): array;
-    public function findAllByCompany(): array;
+    public function findAllByCompanyId(int $id): array;
+    public function findAllByCompanyForCurrentUser(): array;
     public function findLastAdded(): ?Printer;
     public function findOneByID(int $id): ?Printer;
 

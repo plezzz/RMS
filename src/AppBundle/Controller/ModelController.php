@@ -14,7 +14,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use AppBundle\Service\Common\FileUploaderService;
 
 class ModelController extends Controller
 {
@@ -23,22 +22,9 @@ class ModelController extends Controller
      */
     private $modelService;
 
-    /**
-     * @var FileUploaderService
-     */
-    private $fileUploadService;
-
-    /**
-     * @var string
-     * path for image
-     */
-    private $type = 'models';
-
-    public function __construct(ModelServiceInterface $modelService,
-                                FileUploaderService $fileUploaderService)
+    public function __construct(ModelServiceInterface $modelService)
     {
         $this->modelService = $modelService;
-        $this->fileUploadService = $fileUploaderService;
     }
 
     /**
@@ -51,7 +37,6 @@ class ModelController extends Controller
      */
     public function create(Request $request)
     {
-
         $model = new Model();
         $form = $this->createFormAndHandler($request, $model);
 
@@ -74,19 +59,79 @@ class ModelController extends Controller
     {
         $model = new Model();
         $form = $this->createFormAndHandler($request, $model);
-
-        $imageFile = $form['image']->getData();
-        if ($imageFile) {
-            $imageFile = $this->fileUploadService->upload($imageFile,$this->type);
-            $model->setImage($imageFile);
-        }
-        $this->modelService->add($model);
+        $this->modelService->add($model,$form);
 
         return $this->redirectToRoute(
             'model_view', ['id' => $model->getId()]
         );
     }
 
+    /**
+     * @Route("/model/edit/{id}", name="model_edit", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param $id
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function editModel($id, Request $request)
+    {
+        $model = $this->modelService->findOneByID($id);
+
+        if ($model === null) {
+            $this->redirectToRoute("homepage");
+        }
+
+        $form = $this->createFormAndHandler($request, $model);
+
+        return $this->render('printer/model/edit.html.twig',
+            [
+                'model' => $model,
+                'form' => $form->createView(),
+            ]);
+    }
+    
+    /**
+     * @Route("/model/edit/{id}", methods={"POST"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     *
+     * @param $id
+     * @param Request $request
+     * @return Response
+     * @throws \Exception
+     */
+    public function editModelProcess($id, Request $request)
+    {
+        $model = $this->modelService->findOneByID($id);
+
+        $form = $this->createFormAndHandler($request, $model);
+
+        $this->modelService->edit($model, $form);
+
+        return $this->redirectToRoute("model_view",
+            [
+                'id' => $model->getId()
+            ]);
+    }
+
+    /**
+     * @param int $id
+     * @return RedirectResponse
+     * @Route("model/delete/{id}",name="model_delete", methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     */
+
+    public function delete(int $id)
+    {
+        $this->modelService->delete($id);
+
+        return $this->redirectToRoute(
+            'homepage', []
+        );
+
+    }
+    
     /**
      * @Route("/model/{id}",name="model_view" , methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")

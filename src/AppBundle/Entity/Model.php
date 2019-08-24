@@ -183,7 +183,7 @@ class Model
     /**
      * @return User
      */
-    public function getUserAdded(): User
+    public function getUserAdded()
     {
         return $this->userAdded;
     }
@@ -191,7 +191,7 @@ class Model
     /**
      * @param User $userAdded
      */
-    public function setUserAdded(User $userAdded): void
+    public function setUserAdded(User $userAdded)
     {
         $this->userAdded = $userAdded;
     }

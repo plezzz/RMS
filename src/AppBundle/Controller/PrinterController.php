@@ -159,7 +159,6 @@ class PrinterController extends Controller
         return $this->redirectToRoute(
             'homepage', []
         );
-
     }
 
     /**

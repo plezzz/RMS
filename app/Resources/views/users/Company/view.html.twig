@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div id="content" class="content">
+        <ol class="breadcrumb hidden-print pull-right">
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item">Company Details</li>
+        </ol>
+        <h1 class="page-header hidden-print">Company Details <small>header small text goes here...</small></h1>
+        <div class="invoice">
+            <div class="invoice-company text-inverse f-w-600">
+                    <span class="pull-right hidden-print">
+                        <a href="{{ path('company_edit', {'id': company.id}) }}"><button type="button" class="btn btn-lime">Edit</button></a>
+                        {% if printers | length==0 %}
+                        <a href="#" input="3" data-text="4" data-click="swal-dangerCompany" class="btn btn-danger">Delete</a>
+                        <input type="hidden" id="companyId" value="{{ company.id }}">
+                        {% endif %}
+                    </span>
+               {{ company.name }}
+            </div>
+            <div class="invoice-header">
+                <div class="invoice-from">
+                    <small>Company logo</small>
+                    <address class="m-t-5 m-b-5">
+                        <img alt="Company Image" src="{{ asset('images/company/')}}{{ company.image }}" width="150"/>
+                    </address>
+                </div>
+                <div class="invoice-to">
+                    <small>Company</small>
+                    <address class="m-t-5 m-b-5">
+                        <strong class="text-inverse">{{ company.name }}</strong><br/>
+                    </address>
+                </div>
+                <div class="invoice-date">
+                    <address class="m-t-5 m-b-5">
+                        <small>Date Added</small>
+                        <div class="date text-inverse m-t-5">{{ company.dateAdded|date("d.m.Y H:i") }}</div>
+                        <small>User Added</small>
+                        <div class="date text-inverse m-t-5">{{ company.userAdded }}</div>
+                    </address>
+                </div>
+            </div>
+        </div>
+        <!-- begin printers with same serial number -->
+        <div class="panel-body" style="background: #FFFFFF">
+            <table id="data-table-default" class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th class="text-center">Date</th>
+                    <th class="text-center">Problem</th>
+                    <th class="text-center">Diagnostic</th>
+                    <th class="text-center">Invoice Description</th>
+                    <th class="text-center">Cartridge</th>
+                    <th class="text-center no-wrap">Customer Price</th>
+                    <th class="text-center">Counter</th>
+                    <th class="text-center no-wrap">Technician</th>
+                    <th class="text-center">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for printerOne in printers %}
+                    <tr>
+                        <td class="text-center">
+                            <span class="text-inverse">{{ printerOne.dateAdded|date("d.m.Y H:i") }}</span>
+                        </td>
+                        <td class="text-center">
+                            {{ printerOne.problemDescription }}
+                        </td>
+                        <td class="text-center">
+                            {{ printerOne.diagnostic }}
+                        </td>
+                        <td class="text-center" style="column-width: 75px; -webkit-column-width: 75px;">
+                            {{ printerOne.invoiceDescription }}
+                        </td>
+                        <td class="text-center">{{ printerOne.cartridge }}</td>
+                        <td class="text-center">{{ printerOne.customerPrice }}</td>
+                        <td class="text-center">{{ printerOne.counter }}</td>
+                        <td class="text-center">{{ printerOne.technician }}</td>
+                        <td class="text-center">
+                            <a href="{{ path('printer_view', {'id': printerOne.id}) }}">
+                                <button type="button" class="btn btn-success">View</button>
+                            </a>
+                            <a href="{{ path('printer_edit', {'id': printerOne.id}) }}">
+                                <button type="button" class="btn btn-lime">Edit</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <!-- end printers with same serial number -->
+    </div>
+{% endblock %}
+

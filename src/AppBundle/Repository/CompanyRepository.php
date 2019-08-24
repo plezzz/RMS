@@ -5,6 +5,8 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Company;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Mapping\ClassMetadata;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 
 /**
  * CompanyRepository
@@ -21,5 +23,55 @@ class CompanyRepository extends \Doctrine\ORM\EntityRepository
                 new ClassMetadata(Company::class) :
                 $metadata
         );
+    }
+
+
+    /**
+     * @param Company $company
+     * @return bool
+     * @throws ORMException
+     */
+    public function add(Company $company)
+    {
+        try {
+
+            $this->_em->persist($company);
+            $this->_em->flush();
+            return true;
+        } catch (OptimisticLockException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param Company $company
+     * @return bool
+     * @throws ORMException
+     */
+    public function delete(Company $company)
+    {
+        try {
+            $this->_em->remove($company);
+            $this->_em->flush();
+            return true;
+        } catch (OptimisticLockException $e) {
+            return false;
+        }
+    }
+
+    /**
+     * @param Company $company
+     * @return bool
+     * @throws ORMException
+     */
+    public function update(Company $company)
+    {
+        try {
+            $this->_em->merge($company);
+            $this->_em->flush();
+            return true;
+        } catch (OptimisticLockException $e) {
+            return false;
+        }
     }
 }

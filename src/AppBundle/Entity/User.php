@@ -113,11 +113,19 @@ class User implements UserInterface
      */
     private $models;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Company", mappedBy="userAdded")
+     */
+    private $companiesAdded;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->printers = new ArrayCollection();
         $this->models = new ArrayCollection();
+        $this->companiesAdded = new ArrayCollection();
     }
 
     /**
@@ -410,6 +418,23 @@ class User implements UserInterface
     {
         $this->models = $models;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getCompaniesAdded(): ArrayCollection
+    {
+        return $this->companiesAdded;
+    }
+
+    /**
+     * @param ArrayCollection $companiesAdded
+     */
+    public function setCompaniesAdded(ArrayCollection $companiesAdded): void
+    {
+        $this->companiesAdded = $companiesAdded;
+    }
+
 
 
     /**

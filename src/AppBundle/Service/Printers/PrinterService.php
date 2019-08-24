@@ -211,9 +211,18 @@ class PrinterService implements PrinterServiceInterface
     /**
      * @return array
      */
-    public function findAllByCompany(): array
+    public function findAllByCompanyForCurrentUser(): array
     {
         $companyId = $this->userService->currentUser()->getCompanyName()->getId();
         return $this->printerRepository->findBy(['companyName' => $companyId], ['dateAdded' => 'DESC']);
+    }
+
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function findAllByCompanyId(int $id): array
+    {
+        return $this->printerRepository->findBy(['companyName' => $id], ['dateAdded' => 'DESC']);
     }
 }

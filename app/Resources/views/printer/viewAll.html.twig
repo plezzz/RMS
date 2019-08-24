@@ -5,8 +5,8 @@
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
             <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:">Tables</a></li>
-            <li class="breadcrumb-item active">Managed Tables</li>
+            <li class="breadcrumb-item"><a href="javascript:">Printer</a></li>
+            <li class="breadcrumb-item active">All Printers</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
@@ -46,7 +46,7 @@
                                         <td> {{ printer.dateAdded|date("d.m.Y H:i") }}</td>
                                         <td> P{{ printer.batch }}</td>
                                         <td>  {{ printer.companyName }}</td>
-                                        <td class="with-img"><img src="{{ printer.getModel.getImageUrl }}"
+                                        <td class="with-img"><img src="{{ asset('images/models/') }}{{ printer.model.image }}"
                                                                   alt="{{ printer.model }}"
                                                                   class="img-rounded height-80"/></td>
                                         <td> {{ printer.model }}</td>
@@ -77,6 +77,5 @@
         <!-- end panel -->
     </div>
     <!-- end #content -->
-
 {% endblock %}
 

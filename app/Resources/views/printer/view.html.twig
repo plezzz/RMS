@@ -12,21 +12,19 @@
         <!-- begin page-header -->
         <h1 class="page-header hidden-print">Printer Details <small>header small text goes here...</small></h1>
         <!-- end page-header -->
-        <!-- begin invoice -->
+        <!-- begin printer-content -->
         <div class="invoice">
-            <!-- begin invoice-company -->
+            <!-- begin printer-company -->
             <div class="invoice-company text-inverse f-w-600">
                     <span class="pull-right hidden-print">
-
                         <a href="{{ path('printer_edit', {'id': printer.id}) }}"><button type="button" class="btn btn-lime">Edit</button></a>
-							<a href="#" input="3" data-text="4" data-click="swal-danger"  class="btn btn-danger">Delete</a>
+							<a href="#" input="3" data-text="4" data-click="swal-dangerPrinter"  class="btn btn-danger">Delete</a>
                         <input type="hidden" id="printerId" value="{{printer.id}}">
-
                     </span>
                 {{ printer.companyName.name }}
             </div>
-            <!-- end invoice-company -->
-            <!-- begin invoice-header -->
+            <!-- end printer-company -->
+            <!-- begin printer-header -->
             <div class="invoice-header">
                 <div class="invoice-from">
                     <small>Model Image</small>
@@ -64,8 +62,8 @@
                     </div>
                 </div>
             </div>
-            <!-- end invoice-header -->
-            <!-- begin invoice-price -->
+            <!-- end printer-header -->
+            <!-- begin printer-price -->
             <div class="invoice-price">
                 <div class="invoice-price-left">
                     <div class="invoice-price-row">
@@ -111,7 +109,7 @@
                     <small>Batch</small> <span class="f-w-600"> P{{ printer.batch }}</span>
                 </div>
             </div>
-            <!-- end invoice-price -->
+            <!-- end printer-price -->
             <!-- begin row -->
             <div class="row">
                 <!-- begin col-6 -->
@@ -169,7 +167,6 @@
             <!-- end superbox -->
         </div>
         <!-- end table-responsive -->
-
         <div class="panel panel-inverse">
             <!-- begin printers with same serial number -->
             <div class="panel-body">
@@ -221,10 +218,9 @@
             </div>
             <!-- end printers with same serial number -->
         </div>
-        <!-- end invoice-content -->
+        <!-- end printer-content -->
     </div>
     <!-- end invoice -->
     <!-- end #content -->
-
 {% endblock %}
 

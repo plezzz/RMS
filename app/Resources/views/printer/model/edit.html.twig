@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block main %}
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb pull-right">
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Page Options</a></li>
+            <li class="breadcrumb-item active">Edit model</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        <h1 class="page-header">Edit model<small>header small text goes here...</small></h1>
+        <!-- end page-header -->
+        <form class="form-horizontal form-bordered action" method="POST"
+              enctype="multipart/form-data">
+            <div class="row">
+                <div class="col-lg-6"
+                     style="background: #FFFFFF">
+                    <!-- begin panel-body -->
+                    <div class="panel-body panel-form">
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="model_brand">Brand</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="model_brand" placeholder="Brand"
+                                       name="model[brand]"value="{{ model.brand }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label" for="model_name">Model</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="model_name"
+                                       placeholder="Name" name="model[name]"  value="{{ model.name }}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label">Image</label>
+                            <div class="col-md-8">
+                                <input accept="image/*" type="file" class="form-control" id="model_image"
+                                       placeholder="Model" name="model[image]">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {{ form_row(form._token) }}
+            <div class="col-sm-4 col-sm-offset-4">
+                <a class="btn btn-default" href="{{ path('homepage') }}">Cancel</a>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+            <br>
+        </form>
+    </div>
+{% endblock %}
