@@ -1,114 +1,112 @@
 {% extends 'baseFrontend.html.twig' %}
 
 {% block main %}
-<body class="pace-top colorWhite">
-<!-- begin #page-loader -->
-<div id="page-loader" class="fade show"><span class="spinner"></span></div>
-<!-- end #page-loader -->
+    <div class="pace-top colorWhite">
+        <!-- begin #page-loader -->
+        <!-- end #page-loader -->
 
-<!-- begin login-cover -->
-<div class="login-cover">
-    <div class="login-cover-image" style="background-image: url({{ asset('img/login-bg/login-bg-16.jpg') }})"
-         data-id="login-cover-image"></div>
-    <div class="login-cover-bg"></div>
-</div>
-<!-- end login-cover -->
-
-<!-- BEGIN container -->
-<div class="container">
-    <!-- BEGIN breadcrumb -->
-    <ul class="breadcrumb m-b-10 f-s-12" >
-        <li class="breadcrumb-item"><a href="{{ path('security_login') }}">Home</a></li>
-        <li class="breadcrumb-item active">Contact Us</li>
-    </ul>
-    <!-- END breadcrumb -->
-    <!-- BEGIN row -->
-    <div class="row row-space-30">
-        <!-- BEGIN col-8 -->
-        <div class="col-md-8">
-            <h4 class="m-t-0 colorWhite">Contacts</h4>
-            <p class="m-b-30 f-s-13">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lobortis tortor justo,
-                elementum volutpat ante porta eu.
-                Sed eget tellus neque. Nam feugiat magna turpis. Vestibulum pharetra nibh et pretium efficitur.
-                Donec porta sollicitudin laoreet.
-                Sed a condimentum urna. Curabitur placerat ornare venenatis. Cras iaculis venenatis imperdiet.
-            </p>
-            <table border="1">
-                <thead class="text-center f-s-20">
-                <td>Name</td>
-                <td>Phone</td>
-                <td>Email</td>
-                </thead>
-                <tbody>
-                {% for account in accounts %}
-                <tr class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">
-                    <td class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">{{ account.name }}  </td>
-                    <td class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">{{ account.phone }}  </td>
-                    <td class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">{{ account.email }}  </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
+        <!-- begin login-cover -->
+        <div class="login-cover">
+            <div class="login-cover-image" style="background-image: url({{ asset('img/login-bg/login-bg-16.jpg') }})"
+                 data-id="login-cover-image"></div>
+            <div class="login-cover-bg"></div>
         </div>
-        <!-- END col-8 -->
-        <!-- BEGIN col-4 -->
-        <div class="col-md-4">
-            <h4 class="m-t-0 colorWhite">Our Contacts</h4>
-            <div class="embed-responsive embed-responsive-16by9 m-b-15">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d733.5495551509895!2d23.375706629221238!3d42.657154698698015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa9b3f05dcb0cf%3A0xf13ee384c1c69b4a!2sFreckles+Ltd.!5e0!3m2!1sen!2sbg!4v1564846550139!5m2!1sen!2sbg"
-                        width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+        <!-- end login-cover -->
+
+        <!-- BEGIN container -->
+        <div class="container">
+            <!-- BEGIN breadcrumb -->
+            <ul class="breadcrumb m-b-10 f-s-12">
+                <li class="breadcrumb-item"><a href="{{ path('security_login') }}">Home</a></li>
+                <li class="breadcrumb-item active">Contact Us</li>
+            </ul>
+            <!-- END breadcrumb -->
+            <!-- BEGIN row -->
+            <div class="row row-space-30">
+                <!-- BEGIN col-8 -->
+                <div class="col-md-8">
+                    <h4 class="m-t-0 colorWhite">Contacts</h4>
+                    <p class="m-b-30 f-s-13">
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur lobortis tortor justo,
+                        elementum volutpat ante porta eu.
+                        Sed eget tellus neque. Nam feugiat magna turpis. Vestibulum pharetra nibh et pretium efficitur.
+                        Donec porta sollicitudin laoreet.
+                        Sed a condimentum urna. Curabitur placerat ornare venenatis. Cras iaculis venenatis imperdiet.
+                    </p>
+                    <table border="1">
+                        <thead class="text-center f-s-20">
+                        <td>Name</td>
+                        <td>Phone</td>
+                        <td>Email</td>
+                        </thead>
+                        <tbody>
+                        {% for account in accounts %}
+                            <tr class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">
+                                <td class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">{{ account.fullName }}  </td>
+                                <td class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">{{ account.externalPhone }}  </td>
+                                <td class="p-t-10 p-b-10 p-l-30 p-r-30 f-s-16">{{ account.email }}  </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <!-- END col-8 -->
+                <!-- BEGIN col-4 -->
+                <div class="col-md-4">
+                    <h4 class="m-t-0 colorWhite">Our Contacts</h4>
+                    <div class="embed-responsive embed-responsive-16by9 m-b-15">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d733.5495551509895!2d23.375706629221238!3d42.657154698698015!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40aa9b3f05dcb0cf%3A0xf13ee384c1c69b4a!2sFreckles+Ltd.!5e0!3m2!1sen!2sbg!4v1564846550139!5m2!1sen!2sbg"
+                                width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+                    </div>
+                    <div><b>SeanTheme Store, Inc</b></div>
+                    <p class="m-b-15">
+                        795 Folsom Ave, Suite 600<br/>
+                        San Francisco, CA 94107<br/>
+                        P: (123) 456-7890<br/>
+                    </p>
+                    <div><b>Email</b></div>
+                    <p class="m-b-15">
+                        <a href="mailto:hello@emailaddress.com">info@seantheme.com</a><br/>
+                        <a href="mailto:hello@emailaddress.com">business@seantheme.com</a><br/>
+                        <a href="mailto:hello@emailaddress.com">support@seantheme.com</a><br/>
+                    </p>
+                    <div class="m-b-5"><b>Social Network</b></div>
+                    <p class="m-b-15">
+                        <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-google-plus"></i></a>
+                        <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-dribbble"></i></a>
+                    </p>
+                </div>
+                <!-- END col-4 -->
             </div>
-            <div><b>SeanTheme Store, Inc</b></div>
-            <p class="m-b-15">
-                795 Folsom Ave, Suite 600<br/>
-                San Francisco, CA 94107<br/>
-                P: (123) 456-7890<br/>
-            </p>
-            <div><b>Email</b></div>
-            <p class="m-b-15">
-                <a href="mailto:hello@emailaddress.com">info@seantheme.com</a><br/>
-                <a href="mailto:hello@emailaddress.com">business@seantheme.com</a><br/>
-                <a href="mailto:hello@emailaddress.com">support@seantheme.com</a><br/>
-            </p>
-            <div class="m-b-5"><b>Social Network</b></div>
-            <p class="m-b-15">
-                <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-google-plus"></i></a>
-                <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-instagram"></i></a>
-                <a href="#" class="btn btn-icon btn-white btn-circle"><i class="fab fa-dribbble"></i></a>
-            </p>
+            <!-- END row -->
         </div>
-        <!-- END col-4 -->
-    </div>
-    <!-- END row -->
-</div>
-<!-- END row -->
-</div>
-<!-- END #product -->
-</div>
-<!-- END #page-container -->
+        <!-- END row -->
 
-<!-- begin login-bg -->
-<ul class="login-bg-list clearfix">
-    <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-17.jpg"
-           style="background-image: url({{ asset('img/login-bg/login-bg-17.jpg') }})"></a></li>
-    <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-16.jpg"
-           style="background-image: url({{ asset('img/login-bg/login-bg-16.jpg') }})"></a></li>
-    <li class="active"><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-15.jpg"
-                          style="background-image: url({{ asset('img/login-bg/login-bg-15.jpg') }})"></a></li>
-    <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-14.jpg"
-           style="background-image: url({{ asset('img/login-bg/login-bg-14.jpg') }})"></a></li>
-    <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-13.jpg"
-           style="background-image: url({{ asset('img/login-bg/login-bg-13.jpg') }})"></a></li>
-    <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-12.jpg"
-           style="background-image: url({{ asset('img/login-bg/login-bg-12.jpg') }})"></a></li>
-</ul>
-<!-- end login-bg -->
-<!-- end page container -->
-<!-- ================== BEGIN BASE JS ================== -->
+    <!-- END #product -->
+
+    <!-- END #page-container -->
+
+    <!-- begin login-bg -->
+    <ul class="login-bg-list clearfix">
+        <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-17.jpg"
+               style="background-image: url({{ asset('img/login-bg/login-bg-17.jpg') }})"></a></li>
+        <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-16.jpg"
+               style="background-image: url({{ asset('img/login-bg/login-bg-16.jpg') }})"></a></li>
+        <li class="active"><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-15.jpg"
+                              style="background-image: url({{ asset('img/login-bg/login-bg-15.jpg') }})"></a></li>
+        <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-14.jpg"
+               style="background-image: url({{ asset('img/login-bg/login-bg-14.jpg') }})"></a></li>
+        <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-13.jpg"
+               style="background-image: url({{ asset('img/login-bg/login-bg-13.jpg') }})"></a></li>
+        <li><a href="javascript:" data-click="change-bg" data-img="img/login-bg/login-bg-12.jpg"
+               style="background-image: url({{ asset('img/login-bg/login-bg-12.jpg') }})"></a></li>
+    </ul>
+    <!-- end login-bg -->
+    <!-- end page container -->
+    </div>
 {% endblock %}
 
 

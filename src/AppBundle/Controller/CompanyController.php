@@ -141,7 +141,7 @@ class CompanyController extends Controller
     /**
      * @Route("/company/{id}",name="company_view" , methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @Security("is_granted(['ROLE_ADMIN','ROLE_TECHNICIAN'] )")
+     * @Security("is_granted(['ROLE_ADMIN','ROLE_TECHNICIAN'])")
      *
      * @param $id
      * @return Response

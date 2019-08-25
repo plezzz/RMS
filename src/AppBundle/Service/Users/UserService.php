@@ -6,11 +6,13 @@ namespace AppBundle\Service\Users;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Common\DateTimeServiceInterface;
+use AppBundle\Service\Common\FileUploaderService;
 use AppBundle\Service\Encryption\ArgonEncryption;
 use AppBundle\Service\Roles\RoleServiceInterface;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
+
 /**
  * @method getDoctrine()
  */
@@ -107,5 +109,20 @@ class UserService implements UserServiceInterface
         return $this->userRepository->getByRoleName($criteria);
     }
 
+    /**
+     * @return array
+     */
+    public function getAccountsPhones(): array
+    {
+        return $this->userRepository->getAccountsPhones();
+    }
+
+    /**
+     * @return array
+     */
+    public function getEmployeesPhones(): array
+    {
+        return $this->userRepository->getEmployeePhones();
+    }
 
 }

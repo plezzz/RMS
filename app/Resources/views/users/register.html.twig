@@ -95,7 +95,7 @@
                             <label class="col-md-3 col-form-label" for="user_Аssigned">Аssigned Тo</label>
                             <div class="col-md-8">
                                 <select class="form-control selectpicker" data-live-search="true" data-size="10"
-                                        data-style="btn-primary" id="user_Аssigned" name="printer[assigned]">
+                                        data-style="btn-primary" id="user_Аssigned" name="user[assigmentUser]">
                                     <option value="null">Not Selected</option>
                                     {% for account in accounts %}
                                         <option value="{{ account.0.id }}">{{ account.0.fullName }}</option>

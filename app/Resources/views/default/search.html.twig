@@ -1,0 +1,206 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <!-- begin #content -->
+    <div id="content" class="content">
+        <!-- begin breadcrumb -->
+        <ol class="breadcrumb pull-right">
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Extra</a></li>
+            <li class="breadcrumb-item active">Search Results</li>
+        </ol>
+        <!-- end breadcrumb -->
+        <!-- begin page-header -->
+        {% set printersCount = printers|length %}
+        {% set companiesCount = companies|length %}
+        {% set usersCount = users|length %}
+        <h1 class="page-header">Search Results <small>For keyword <b>"{{ keyword }}"</b> we found <b>{{ printersCount }}</b> result in
+                printers, <b>{{ companiesCount }}</b> result in companies and <b>{{ usersCount }}</b> result in users.</small>
+        </h1>
+        <!-- end page-header -->
+        <!-- begin row -->
+        <div class="row">
+            <!-- begin col-12 -->
+            <div class="col-md-12">
+                <!-- begin result-container -->
+                <div class="result-container">
+                    <!-- begin input-group -->
+                    <form method="post" action="{{ path('search') }}">
+                        <div class="input-group input-group-lg m-b-20">
+                            <input type="text" name="keyword" class="form-control input-white"
+                                   placeholder="Enter keywords here..." value="{{ keyword }}"/>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search fa-fw"></i> Search
+                                </button>
+                                <button type="button" class="btn btn-primary dropdown-toggle no-caret"
+                                        data-toggle="dropdown">
+                                    <i class="fa fa-cog fa-fw"></i>
+                                </button>
+                                <ul class="dropdown-menu pull-right">
+                                    <li><a href="javascript:">Action</a></li>
+                                    <li><a href="javascript:">Another action</a></li>
+                                    <li><a href="javascript:">Something else here</a></li>
+                                    <li class="divider"></li>
+                                    <li><a href="javascript:">Separated link</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- end input-group -->
+                    <!-- begin result-list printers-->
+                    {% if printersCount > 0 %}
+                        <p>Results printers</p>
+                        <ul class="result-list">
+                            {% for printer in printers|reverse %}
+                                <li>
+                                    <a href="#" class="result-image"
+                                       style="background-image: url({{ asset('images/models/' ~ printer.model.image) }})"></a>
+                                    <div class="result-info">
+                                        <h4 class="title"><a
+                                                    href="{{ path('printer_view', {'id': printer.id}) }}">{{ printer.model }}</a>
+                                        </h4>
+                                        <p class="location">Batch: P{{ printer.batch }},
+                                            S/N: {{ printer.serialNumber }}</p>
+                                        <p class="desc"><span
+                                                    class="location">Problem:<br></span>{{ printer.problemDescription }}
+                                        </p>
+                                        <p class="desc"><span
+                                                    class="location">Repair:<br></span>{{ printer.invoiceDescription }}
+                                        </p>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Price"><i
+                                                        class="fa fa-fw fa-credit-card"></i> {{ printer.customerPrice }}
+                                            </a>
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Status"><i
+                                                        class="fa fa-fw fa-tasks"></i> {{ printer.printerStatus }}</a>
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Counter"><i
+                                                        class="fa fa-fw fa-tachometer-alt"></i> {{ printer.counter }}
+                                            </a>
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Company"><i
+                                                        class="fa fa-fw fa-building"></i> {{ printer.companyName }}</a>
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Technician"><i
+                                                        class="fa fa-fw fa-user"></i> {{ printer.technician }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="result-price">
+                                        <address class="m-t-5 m-b-5">
+                                            <small>Date Arrive</small>
+                                            <div class="date text-inverse m-t-5">{{ printer.dateAdded|date("d.m.Y") }}</div>
+                                            <small>Date Departure</small>
+                                            {% if printer.dateFinish|date("d.m.Y H:i") == "30.11.-0001 00:00" %}
+                                                <div class="date text-inverse m-t-5">Not Finished</div>
+                                            {% else %}
+                                                <div class="date text-inverse m-t-5">{{ printer.dateFinish|date("d.m.Y") }}</div>
+                                            {% endif %}
+                                        </address>
+                                        <a href="{{ path('printer_view', {'id': printer.id}) }}"
+                                           class="btn btn-yellow btn-block">View Details</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <!-- end result-list printers-->
+                    <!-- begin result-list Companies-->
+                    {% if companiesCount > 0 %}
+                        <p>Results companies</p>
+                        <ul class="result-list">
+                            {% for company in companies|reverse %}
+                                <li>
+                                    <a href="#" class="result-image"
+                                       style="background-image: url({{ asset('images/company/' ~ company.image) }}); background-size: 200px; background-repeat: no-repeat"></a>
+                                    <div class="result-info">
+                                        <h4 class="title"><a
+                                                    href="{{ path('company_view', {'id': company.id}) }}">{{ company.name }}</a>
+                                        </h4>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Added from"><i
+                                                        class="fa fa-fw fa-user"></i> {{ company.userAdded }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="result-price">
+                                        <address class="m-t-5 m-b-5">
+                                            <small>Date Added</small>
+                                            <div class="date text-inverse m-t-5">{{ company.dateAdded|date("d.m.Y") }}</div>
+                                        </address>
+                                        <a href="{{ path('company_view', {'id': company.id}) }}"
+                                           class="btn btn-yellow btn-block">View Details</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <!-- end result-list companies-->
+                    <!-- begin result-list users-->
+                    {% if usersCount > 0 %}
+                        <p><br>Results users</p>
+                        <ul class="result-list">
+                            {% for user in users|reverse %}
+                                <li>
+                                    <a href="{{ path('user_view', {'id': user.id}) }}" class="result-image badgeSearch"
+                                       style="background-color: #0a6aa1">{{ user.fullName[:1] }}</a>
+                                    <div class="result-info">
+                                        <h4 class="title"><a
+                                                    href="{{ path('user_view', {'id': user.id}) }}">{{ user.fullName }}</a>
+                                        </h4>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Price"><i
+                                                        class="fa fa-fw fa-mobile"></i> {{ user.mobilePhone }}</a>
+                                        </div>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Price"><i
+                                                        class="fa fa-fw fa-phone"></i> {{ user.externalPhone }}</a>
+                                        </div>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Price"><i
+                                                        class="fa fa-fw fa-phone"></i> {{ user.extensionPhone }}</a>
+                                        </div>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Price"><i
+                                                        class="fa fa-fw fa-envelope"></i> {{ user.email }}</a>
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Company"><i
+                                                        class="fa fa-fw fa-building"></i> {{ user.companyName }}
+                                            </a>
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Assigment"><i
+                                                        class="fa fa-fw fa-user"></i> {{ user.assigmentUser }}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="result-price">
+                                        <address class="m-t-5 m-b-5">
+                                            <small>Date Added</small>
+                                            <div class="date text-inverse m-t-5">{{ user.dateAdded|date("d.m.Y") }}</div>
+                                        </address>
+                                        <a href="{{ path('user_view', {'id': user.id}) }}"
+                                           class="btn btn-yellow btn-block">View Details</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <!-- end result-list users-->
+                </div>
+                <!-- end result-container -->
+            </div>
+            <!-- end col-12 -->
+        </div>
+        <!-- end row -->
+    </div>
+    <!-- end #content -->
+{% endblock %}
+

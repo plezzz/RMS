@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -54,6 +55,49 @@ class UserRepository extends EntityRepository
             ->innerJoin('u.roles','r')
             ->where('r.title=:name')
             ->setParameter('name', $name)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @param $keyword
+     * @return array
+     */
+    public function getByKeyword($keyword): array
+    {
+        return $this->createQueryBuilder('u')
+            ->where("u.email LIKE '%$keyword%'")
+            ->innerJoin('u.companyName', 'c')
+            ->orWhere("u.username LIKE '%$keyword%'")
+            ->orWhere("u.fullName LIKE '%$keyword%'")
+            ->orWhere("c.name LIKE '%$keyword%'")
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_OBJECT);
+    }
+
+    /**
+     * @return array
+     */
+    public function getAccountsPhones(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.fullName, u.email, u.externalPhone')
+            ->innerJoin('u.roles', 'r')
+            ->where("r.title = 'Account'")
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getEmployeePhones(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.fullName, u.email, u.externalPhone, u.extensionPhone, u.mobilePhone, r.title')
+            ->innerJoin('u.roles', 'r')
+            ->where("r.title = 'Account'")
+            ->orWhere("r.title = 'Technician'")
+            ->orWhere("r.title = 'Admin'")
+            ->orderBy('r.title','asc')
+            ->orderBy('u.fullName','asc')
             ->getQuery()
             ->getResult();
     }

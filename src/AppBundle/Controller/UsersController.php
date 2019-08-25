@@ -34,6 +34,7 @@ class UsersController extends Controller
     /**
      * @Route("/user/register", name="user_register", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      * @return Response
      */
     public function register()
@@ -54,6 +55,7 @@ class UsersController extends Controller
     /**
      * @Route("/user/register", methods={"POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      * @param Request $request
      * @return Response
      */
@@ -63,18 +65,20 @@ class UsersController extends Controller
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-
         $this->userService->save($user);
-        return $this->redirectToRoute("security_login");
+
+        return $this->redirectToRoute(
+            'user_view', ['id' => $user->getId()]
+        );
     }
 
     /**
      * @Route("/profile",name="user_profile")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      */
     public function profile()
     {
-        $userRepository = $this->getDoctrine()->getRepository(User::class);
-        $currentUser = $userRepository->find($this->getUser());
+        $currentUser = $this->userService->currentUser();
 
         return $this->render("users/profile.html.twig",
             ['user' => $currentUser]
@@ -82,8 +86,30 @@ class UsersController extends Controller
     }
 
     /**
+     * @Route("/user/{id}",name="user_view" , methods={"GET"})
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
+     *
+     * @param $id
+     * @return Response
+     */
+    public function viewUser($id)
+    {
+        $user = $this->userService->findOneByID($id);
+        if (null === $user) {
+            return $this->redirectToRoute("homepage");
+        }
+
+        return $this->render('users/profile.html.twig',
+            [
+                'user' => $user,
+            ]);
+    }
+
+    /**
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Route("/statistic", name="site_statistic")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      */
     public function statistics()
     {
@@ -91,5 +117,20 @@ class UsersController extends Controller
         return $this->render('users/statistic.html.twig', [
 
         ]);
+    }
+
+    /**
+     * @Route("/phones",name="users_phones")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
+     *
+     */
+    public function phones()
+    {
+        $users = $this->userService->getEmployeesPhones();
+
+        return $this->render("default/phones.html.twig",
+            ['users' => $users]
+        );
     }
 }

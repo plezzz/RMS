@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US">
+<html lang="en-US" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8"/>
     <!-- Mobile Specific -->
@@ -66,10 +66,10 @@
         <!-- begin header-nav -->
         <ul class="navbar-nav navbar-right">
             <li>
-                <form class="navbar-form">
+                <form class="navbar-form" method="post" action="{{ path('search') }}">
                     <div class="form-group">
                         <label>
-                            <input type="text" class="form-control" placeholder="Enter keyword"/>
+                            <input type="text" name="keyword" class="form-control" placeholder="Enter keyword"/>
                         </label>
                         <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
                     </div>
@@ -77,11 +77,11 @@
             </li>
             <li class="dropdown navbar-user">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="{{ asset('img/user/user-13.jpg') }}" alt=""/>
+                    <span class="badgeCircle">{{ app.user.fullName[:1] }}</span>
                     <span class="d-none d-md-inline">{{ app.user.fullName }}</span> <b class="caret"></b>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
-                    <a href="javascript:" class="dropdown-item">Edit Profile</a>
+                    <a href="{{ path('user_profile') }}" class="dropdown-item">Profile</a>
                     <a href="javascript:" class="dropdown-item"><span class="badge badge-danger pull-right">2</span>
                         Inbox</a>
                     <a href="javascript:" class="dropdown-item">Calendar</a>
@@ -137,6 +137,7 @@
                     <ul class="sub-menu">
                         <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
                         <li><a href="{{ path('rss') }}"><i class="fa fa-newspaper"></i> <span>News</span></a></li>
+                        <li><a href="{{ path('users_phones') }}"><i class="fa fa-phone"></i> <span>Phones</span></a></li>
                     </ul>
                 </li>
                 <li class="has-sub">

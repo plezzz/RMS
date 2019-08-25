@@ -120,12 +120,28 @@ class User implements UserInterface
      */
     private $companiesAdded;
 
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", inversedBy="assigmentUsers")
+     *
+     */
+    private $assigmentUser;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\User", mappedBy="assigmentUser")
+     */
+    private $assigmentUsers;
+
     public function __construct()
     {
         $this->roles = new ArrayCollection();
         $this->printers = new ArrayCollection();
         $this->models = new ArrayCollection();
         $this->companiesAdded = new ArrayCollection();
+        $this->assigmentUsers = new ArrayCollection();
     }
 
     /**
@@ -281,6 +297,14 @@ class User implements UserInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isEmployee()
+    {
+        return in_array("ROLE_EMPLOYEE", $this->getRoles());
+    }
+
+    /**
      * @return string
      */
     public function getFullName()
@@ -406,7 +430,7 @@ class User implements UserInterface
     /**
      * @return ArrayCollection
      */
-    public function getModels(): ArrayCollection
+    public function getModels()
     {
         return $this->models;
     }
@@ -414,7 +438,7 @@ class User implements UserInterface
     /**
      * @param ArrayCollection $models
      */
-    public function setModels(ArrayCollection $models): void
+    public function setModels(ArrayCollection $models)
     {
         $this->models = $models;
     }
@@ -422,7 +446,7 @@ class User implements UserInterface
     /**
      * @return ArrayCollection
      */
-    public function getCompaniesAdded(): ArrayCollection
+    public function getCompaniesAdded()
     {
         return $this->companiesAdded;
     }
@@ -430,12 +454,42 @@ class User implements UserInterface
     /**
      * @param ArrayCollection $companiesAdded
      */
-    public function setCompaniesAdded(ArrayCollection $companiesAdded): void
+    public function setCompaniesAdded(ArrayCollection $companiesAdded)
     {
         $this->companiesAdded = $companiesAdded;
     }
 
+    /**
+     * @return User
+     */
+    public function getAssigmentUser()
+    {
+        return $this->assigmentUser;
+    }
 
+    /**
+     * @param User $assigmentUser
+     */
+    public function setAssigmentUser(User $assigmentUser)
+    {
+        $this->assigmentUser = $assigmentUser;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getAssigmentUsers()
+    {
+        return $this->assigmentUsers;
+    }
+
+    /**
+     * @param ArrayCollection $assigmentUsers
+     */
+    public function setAssigmentUsers(ArrayCollection $assigmentUsers)
+    {
+        $this->assigmentUsers = $assigmentUsers;
+    }
 
     /**
      * @return string
@@ -444,6 +498,5 @@ class User implements UserInterface
     {
         return $this->getFullName();
     }
-
 }
 

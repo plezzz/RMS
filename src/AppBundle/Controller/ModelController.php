@@ -32,6 +32,7 @@ class ModelController extends Controller
      *
      * @Route("model/add", name="add_model", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @return RedirectResponse|Response
      */
@@ -54,6 +55,7 @@ class ModelController extends Controller
      * @return RedirectResponse|Response
      * @Route("model/add", methods={"POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      */
     public function createProcess(Request $request)
     {
@@ -69,6 +71,7 @@ class ModelController extends Controller
     /**
      * @Route("/model/edit/{id}", name="model_edit", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param $id
      * @param Request $request
@@ -95,6 +98,7 @@ class ModelController extends Controller
     /**
      * @Route("/model/edit/{id}", methods={"POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param $id
      * @param Request $request
@@ -120,6 +124,7 @@ class ModelController extends Controller
      * @return RedirectResponse
      * @Route("model/delete/{id}",name="model_delete", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      */
 
     public function delete(int $id)
@@ -135,6 +140,7 @@ class ModelController extends Controller
     /**
      * @Route("/model/{id}",name="model_view" , methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param $id
      * @return Response

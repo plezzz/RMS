@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -44,7 +45,7 @@ class PrinterRepository extends EntityRepository
     }
 
     /**
-     * @param Printer  $printer
+     * @param Printer $printer
      * @return bool
      * @throws ORMException
      */
@@ -73,5 +74,20 @@ class PrinterRepository extends EntityRepository
         } catch (OptimisticLockException $e) {
             return false;
         }
+    }
+
+    /**
+     * @param $keyword
+     * @return array
+     */
+    public function getByKeyword($keyword): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where("p.serialNumber LIKE '%$keyword%'")
+            ->innerJoin('p.model', 'm')
+            ->orWhere("p.batch LIKE '%$keyword%'")
+            ->orWhere("m.name LIKE '%$keyword%'")
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 }

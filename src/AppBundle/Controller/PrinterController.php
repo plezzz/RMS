@@ -46,6 +46,7 @@ class PrinterController extends Controller
      *
      * @Route("printer/add", name="add_printer", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @return RedirectResponse|Response
      */
@@ -76,6 +77,7 @@ class PrinterController extends Controller
      * @throws ORMException
      * @Route("printer/add", methods={"POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      */
     public function createProcess(Request $request)
@@ -93,6 +95,7 @@ class PrinterController extends Controller
     /**
      * @Route("/printer/edit/{id}", name="printer_edit", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param $id
      * @param Request $request
@@ -124,6 +127,7 @@ class PrinterController extends Controller
     /**
      * @Route("/printer/edit/{id}", methods={"POST"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param $id
      * @param Request $request
@@ -150,6 +154,7 @@ class PrinterController extends Controller
      * @throws ORMException
      * @Route("printer/delete/{id}",name="printer_delete", methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      */
 
     public function delete(int $id)
@@ -164,6 +169,7 @@ class PrinterController extends Controller
     /**
      * @Route("/printer/{id}",name="printer_view" , methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param $id
      * @return Response
@@ -186,6 +192,7 @@ class PrinterController extends Controller
     /**
      * @Route("/printers/last",name="printer_viewLast")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @return Response
      */
@@ -198,6 +205,7 @@ class PrinterController extends Controller
     /**
      * @Route("/printers/edit",name="printer_editLast")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      * @param Request $request
      * @return Response
@@ -210,22 +218,9 @@ class PrinterController extends Controller
     }
 
     /**
-     * @return bool
-     */
-    private function isTechnicianOrAdmin()
-    {
-        /** @var User $currentUser */
-        $currentUser = $this->getUser();
-
-        if (!$currentUser->isTechnician() && !$currentUser->isAdmin()) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * @Route("/printers/all",name="printer_view_all")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
      *
      *
      * @return Response

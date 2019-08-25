@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -26,7 +27,8 @@ class UserType extends AbstractType
             ])
             ->add('mobilePhone')
             ->add('extensionPhone')
-            ->add('externalPhone');
+            ->add('externalPhone')
+            ->add('assigmentUser');
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -21,4 +21,8 @@ interface UserServiceInterface
     public function findAll(): array;
 
     public function findAllUsersByRole($criteria): array;
+
+    public function getAccountsPhones(): array;
+
+    public function getEmployeesPhones(): array;
 }
