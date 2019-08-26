@@ -16,11 +16,14 @@
         <div class="invoice">
             <!-- begin printer-company -->
             <div class="invoice-company text-inverse f-w-600">
+                {% if is_granted('ROLE_EMPLOYEE') %}
                     <span class="pull-right hidden-print">
-                        <a href="{{ path('printer_edit', {'id': 2933}) }}"><button type="button" class="btn btn-lime">Edit</button></a>
-							<a href="#" input="3" data-text="4" data-click="swal-dangerPrinter"  class="btn btn-danger">Delete</a>
-                        <input type="hidden" id="printerId" value="{{printer.id}}">
+                        <a href="{{ path('printer_edit', {'id': printer.id }) }}"><button type="button"
+                                                                                          class="btn btn-lime">Edit</button></a>
+							<a href="#" input="3" data-text="4" data-click="swal-dangerPrinter" class="btn btn-danger">Delete</a>
+                        <input type="hidden" id="printerId" value="{{ printer.id }}">
                     </span>
+                {% endif %}
                 {{ printer.companyName.name }}
             </div>
             <!-- end printer-company -->
@@ -29,7 +32,8 @@
                 <div class="invoice-from">
                     <small>Model Image</small>
                     <address class="m-t-5 m-b-5">
-                        <img alt="printer Image" src="{{ asset('images/models/') }}{{ printer.model.image }}" width="150"/>
+                        <img alt="printer Image" src="{{ asset('images/models/') }}{{ printer.model.image }}"
+                             width="150"/>
                     </address>
                 </div>
                 <div class="invoice-to">
@@ -93,6 +97,7 @@
                                 {% endif %}
                             </span>
                         </div>
+                        {% if is_granted('ROLE_EMPLOYEE') %}
                         <div class="sub-price">
                             <small>Show comment</small>
                             <span class="text-inverse">
@@ -103,6 +108,7 @@
                                 {% endif %}
                             </span>
                         </div>
+                        {% endif %}
                     </div>
                 </div>
                 <div class="invoice-price-right">
@@ -125,13 +131,15 @@
                             </div>
                         </div>
                         <!-- end card -->
-                        <!-- begin card -->
-                        <div class="card">
-                            <div class="card-block">
-                                <h4 class="card-title">Diagnostic</h4>
-                                <p class="card-text">{{ printer.diagnostic }}</p>
+                        {% if is_granted('ROLE_TECHNICIAN') %}
+                            <!-- begin card -->
+                            <div class="card">
+                                <div class="card-block">
+                                    <h4 class="card-title">Diagnostic</h4>
+                                    <p class="card-text">{{ printer.diagnostic }}</p>
+                                </div>
                             </div>
-                        </div>
+                        {% endif %}
                         <!-- end card -->
                         <!-- begin card -->
                         <div class="card">
@@ -142,12 +150,23 @@
                         </div>
                         <!-- end card -->
                         <!-- begin card -->
+                        {% if is_granted('ROLE_EMPLOYEE') %}
                         <div class="card">
                             <div class="card-block">
                                 <h4 class="card-title">Comments</h4>
                                 <p class="card-text">{{ printer.comments }}</p>
                             </div>
                         </div>
+                        {% else %}
+                        {% if printer.showComment %}
+                            <div class="card">
+                                <div class="card-block">
+                                    <h4 class="card-title">Comments</h4>
+                                    <p class="card-text">{{ printer.comments }}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% endif %}
                         <!-- end card -->
                     </div>
                     <!-- end card-group -->

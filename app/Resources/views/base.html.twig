@@ -137,9 +137,12 @@
                     <ul class="sub-menu">
                         <li><a href="{{ path('homepage') }}"><i class="fa fa-home"></i> <span>Home</span></a></li>
                         <li><a href="{{ path('rss') }}"><i class="fa fa-newspaper"></i> <span>News</span></a></li>
+                        {% if is_granted('ROLE_EMPLOYEE') %}
                         <li><a href="{{ path('users_phones') }}"><i class="fa fa-phone"></i> <span>Phones</span></a></li>
+                         {% endif %}
                     </ul>
                 </li>
+                {% if is_granted('ROLE_EMPLOYEE') %}
                 <li class="has-sub">
                     <a href="javascript:">
                         <b class="caret"></b>
@@ -191,6 +194,7 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
                 <!-- begin sidebar minify button -->
                 <li><a href="javascript:" class="sidebar-minify-btn" data-click="sidebar-minify"><i
                                 class="fa fa-angle-double-left"></i></a></li>

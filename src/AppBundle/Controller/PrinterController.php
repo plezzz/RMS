@@ -9,7 +9,6 @@ use AppBundle\Service\Printers\PrinterServiceInterface;
 use Doctrine\ORM\ORMException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Printer;
-use AppBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -169,7 +168,7 @@ class PrinterController extends Controller
     /**
      * @Route("/printer/{id}",name="printer_view" , methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @Security("has_role('ROLE_EMPLOYEE')")
+     *
      *
      * @param $id
      * @return Response
