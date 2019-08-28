@@ -202,21 +202,6 @@ class PrinterController extends Controller
     }
 
     /**
-     * @Route("/printers/edit",name="printer_editLast")
-     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     * @Security("has_role('ROLE_EMPLOYEE')")
-     *
-     * @param Request $request
-     * @return Response
-     * @throws \Exception
-     */
-    public function editLastPrinter(Request $request)
-    {
-        $printer = $this->printerService->findLastAdded();
-        return $this->editPrinter($printer->getId(), $request);
-    }
-
-    /**
      * @Route("/printers/all",name="printer_view_all")
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Security("has_role('ROLE_EMPLOYEE')")

@@ -6,7 +6,6 @@ namespace AppBundle\Service\Users;
 use AppBundle\Entity\User;
 use AppBundle\Repository\UserRepository;
 use AppBundle\Service\Common\DateTimeServiceInterface;
-use AppBundle\Service\Common\FileUploaderService;
 use AppBundle\Service\Encryption\ArgonEncryption;
 use AppBundle\Service\Roles\RoleServiceInterface;
 use Doctrine\ORM\ORMException;
@@ -124,5 +123,4 @@ class UserService implements UserServiceInterface
     {
         return $this->userRepository->getEmployeePhones();
     }
-
 }
