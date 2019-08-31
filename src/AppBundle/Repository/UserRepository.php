@@ -71,6 +71,7 @@ class UserRepository extends EntityRepository
             ->orWhere("u.username LIKE '%$keyword%'")
             ->orWhere("u.fullName LIKE '%$keyword%'")
             ->orWhere("c.name LIKE '%$keyword%'")
+            ->orderBy('u.dateAdded', "ASC")
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
@@ -88,6 +89,9 @@ class UserRepository extends EntityRepository
             ->getResult();
     }
 
+    /**
+     * @return array
+     */
     public function getEmployeePhones(): array
     {
         return $this->createQueryBuilder('u')

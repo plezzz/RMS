@@ -87,6 +87,7 @@ class PrinterRepository extends EntityRepository
             ->innerJoin('p.model', 'm')
             ->orWhere("p.batch LIKE '%$keyword%'")
             ->orWhere("m.name LIKE '%$keyword%'")
+            ->orderBy('p.dateAdded', "ASC")
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }

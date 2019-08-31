@@ -53,7 +53,7 @@
                         <ul class="result-list">
                             {% for printer in printers|reverse %}
                                 <li>
-                                    <a href="#" class="result-image"
+                                    <a href="{{ path('printer_view', {'id': printer.id}) }}" class="result-image"
                                        style="background-image: url({{ asset('images/models/' ~ printer.model.image) }})"></a>
                                     <div class="result-info">
                                         <h4 class="title"><a

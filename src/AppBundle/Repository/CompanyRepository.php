@@ -83,6 +83,7 @@ class CompanyRepository extends EntityRepository
     {
         return $this->createQueryBuilder('c')
             ->where("c.name LIKE '%$keyword%'")
+            ->orderBy('c.dateAdded', "ASC")
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
