@@ -20,6 +20,7 @@ interface PrinterServiceInterface
     public function findAllByCompanyForCurrentUser(): array;
     public function findLastAdded(): ?Printer;
     public function findOneByID(int $id): ?Printer;
+    public function getNotReady(): array;
 
 
 }

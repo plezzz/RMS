@@ -48,7 +48,6 @@ security:
                 #always_remember_me: true
                 token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
-
     access_control:
     # this is a catch-all for the admin area
     # additional security lives in the controllers

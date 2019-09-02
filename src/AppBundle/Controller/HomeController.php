@@ -7,8 +7,6 @@ use AppBundle\Service\Printers\PrinterService;
 use AppBundle\Service\Printers\PrinterServiceInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends Controller
@@ -34,9 +32,11 @@ class HomeController extends Controller
     public function indexAction()
     {
         $printers = $this->printerService->findAll();
+        $notFinished =$this->printerService->getNotReady();
 
         return $this->render('default/index.html.twig', [
-            'printers' => $printers
+            'printers' => $printers,
+            "notFinished" => $notFinished
         ]);
     }
 

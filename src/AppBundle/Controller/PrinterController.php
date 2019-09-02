@@ -7,6 +7,7 @@ use AppBundle\Service\Common\VerificationsServiceInterface;
 use AppBundle\Service\Printers\PrinterService;
 use AppBundle\Service\Printers\PrinterServiceInterface;
 use Doctrine\ORM\ORMException;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Printer;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -136,9 +137,7 @@ class PrinterController extends Controller
     public function editPrinterProcess($id, Request $request)
     {
         $printer = $this->printerService->findOneByID($id);
-
         $form = $this->createFormAndHandler($request, $printer);
-
         $this->printerService->edit($printer, $form);
 
         return $this->redirectToRoute("printer_view",
@@ -155,7 +154,6 @@ class PrinterController extends Controller
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Security("has_role('ROLE_EMPLOYEE')")
      */
-
     public function delete(int $id)
     {
         $this->printerService->delete($id);
@@ -168,7 +166,6 @@ class PrinterController extends Controller
     /**
      * @Route("/printer/{id}",name="printer_view" , methods={"GET"})
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
-     *
      *
      * @param $id
      * @return Response
@@ -206,13 +203,22 @@ class PrinterController extends Controller
      * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
      * @Security("has_role('ROLE_EMPLOYEE')")
      *
-     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
      * @return Response
      */
-    public function viewPrinters()
+    public function viewPrinters(Request $request, PaginatorInterface $paginator)
     {
-        $printers = $this->printerService->findAllDESC();
+        $allPrinters = $this->printerService->findAllDESC();
 
+        $printers = $paginator->paginate(
+        // Doctrine Query, not results
+            $allPrinters,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
 
         return $this->render('printer/viewAll.html.twig',
             [

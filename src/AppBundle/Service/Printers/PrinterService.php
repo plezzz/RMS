@@ -225,4 +225,12 @@ class PrinterService implements PrinterServiceInterface
     {
         return $this->printerRepository->findBy(['companyName' => $id], ['dateAdded' => 'DESC']);
     }
+
+    /**
+     * @return array
+     */
+    public function getNotReady(): array
+    {
+        return $this->printerRepository->getNotFinished();
+    }
 }

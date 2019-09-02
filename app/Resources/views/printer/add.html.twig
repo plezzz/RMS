@@ -36,7 +36,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_companyName">Company Name</label>
                             <div class="col-md-8">
-                                <select class="form-control selectpicker" data-live-search="true" data-size="10"
+                                <select class="form-control selectpicker" data-live-search="true" data-size="5"
                                         data-style="btn-primary" id="printer_companyName" name="printer[companyName]">
                                     {% for company in companies %}
                                         <option value="{{ company.id }}">{{ company.name }}</option>
@@ -47,7 +47,7 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label" for="printer_model">Model</label>
                             <div class="col-md-8">
-                                <select class="form-control selectpicker" data-size="10" name="printer[model]"
+                                <select class="form-control selectpicker" data-size="5" name="printer[model]"
                                         id="printer_model" data-live-search="true" data-style="btn-primary">
                                     {% for model in models %}
                                         <option value="{{ model.id }}">{{ model.brand }} {{ model.name }}</option>
@@ -82,6 +82,7 @@
                             <div class="col-md-8">
                                 <select class="form-control selectpicker" data-live-search="true" data-size="10"
                                         data-style="btn-primary" id="printer_Status" name="printer[printerStatus]">
+                                    <option value="2">Diagnostic</option>
                                     {% for statusOne in status %}
                                         <option value="{{ statusOne.id }}">{{ statusOne.name }}</option>
                                     {% endfor %}

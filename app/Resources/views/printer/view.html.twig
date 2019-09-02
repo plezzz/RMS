@@ -51,6 +51,8 @@
                             <div class="date text-inverse m-t-5">Not Finished</div>
                         {% else %}
                             <div class="date text-inverse m-t-5">{{ printer.dateFinish|date("d.m.Y H:i") }}</div>
+                            <small>Add Protocol</small>
+                            <div class="date text-inverse m-t-5">{{ printer.addProtocol }}</div>
                         {% endif %}
                     </address>
                 </div>

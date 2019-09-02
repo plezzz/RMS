@@ -91,4 +91,15 @@ class PrinterRepository extends EntityRepository
             ->getQuery()
             ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
+
+    /**
+     * @return array
+     */
+    public function getNotFinished(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where("p.printerStatus NOT IN (1)")
+            ->getQuery()
+            ->getResult();
+    }
 }
