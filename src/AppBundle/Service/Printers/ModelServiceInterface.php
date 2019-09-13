@@ -17,4 +17,6 @@ interface ModelServiceInterface
     public function edit(Model $model, FormInterface $form): bool;
 
     public function delete(int $id): bool;
+
+    public function findAllDESC():array;
 }

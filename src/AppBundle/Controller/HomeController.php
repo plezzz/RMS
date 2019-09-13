@@ -45,9 +45,14 @@ class HomeController extends Controller
      * @Route("/rss", name="rss")
      */
     public function viewRSSAction(){
-        $rss = simplexml_load_file('https://www.investor.bg/news/rss/last/260/');
-        return $this->render('default/rss.html.twig', array(
-            'rss' => $rss,
-        ));
+        $weatherUrl = 'http://api.openweathermap.org/data/2.5/weather?id=727011&appid=30d5259cc6973abc960849ee29b751ff&units=metric&lang=bg';
+        $weather = json_decode(file_get_contents($weatherUrl), true);
+
+        $newsUrl = "https://www.investor.bg/news/rss/last/260/";
+        $news = simplexml_load_file($newsUrl);
+        return $this->render('default/rss.html.twig', [
+            'news' => $news,
+            'weather' => $weather
+        ]);
     }
 }

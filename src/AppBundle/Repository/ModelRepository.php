@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\Model;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping\ClassMetadata;
@@ -73,5 +74,18 @@ class ModelRepository extends EntityRepository
         } catch (OptimisticLockException $e) {
             return false;
         }
+    }
+
+    /**
+     * @param $keyword
+     * @return array
+     */
+    public function getByKeyword($keyword): array
+    {
+        return $this->createQueryBuilder('m')
+            ->where("m.name LIKE '%$keyword%'")
+            ->orderBy('m.dateAdded', "ASC")
+            ->getQuery()
+            ->getResult(AbstractQuery::HYDRATE_OBJECT);
     }
 }

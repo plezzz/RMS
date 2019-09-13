@@ -4,34 +4,93 @@
     <div id="content" class="content">
         <!-- begin breadcrumb -->
         <ol class="breadcrumb pull-right">
-            <li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-            <li class="breadcrumb-item"><a href="javascript:;">Extra</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Home</a></li>
+            <li class="breadcrumb-item"><a href="javascript:">Extra</a></li>
             <li class="breadcrumb-item active">Timeline</li>
         </ol>
         <!-- end breadcrumb -->
         <!-- begin page-header -->
         <h1 class="page-header">Technology News <small>RSS from Investor.BG</small></h1>
         <!-- end page-header -->
+        <!--start weather-->
+        <div class="note note-primary note-with-right-icon">
+            <div class="note-icon"><img src="http://openweathermap.org/img/wn/{{ weather.weather.0.icon }}@2x.png" alt="{{ weather.weather.0.description }}">
+                <h4>{{ weather.weather.0.description }} <hr>{{ weather.name }}</h4></div>
+            <div class="note-content text-right">
+                <!-- begin col-6 -->
+                <div class="col-md-12">
+                    <div class="m-b-10 f-s-16 m-t-5"><b class="text-inverse"></b></div>
+                    <!-- begin card-group -->
+                    <div class="card-group">
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">{{ weather.main.temp|round(1) }} °C</h4>
+                                <p class="card-text">Temperature</p>
+                                <h4 class="card-title">{{ weather.main.humidity }} %</h4>
+                                <p class="card-text">Humidity</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">{{ weather.wind.speed }} m/s</h4>
+                                <p class="card-text">Wind</p>
+                                <h4 class="card-title"> {{ weather.main.pressure }} hpa</h4>
+                                <p class="card-text">Pressure</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">MIN: {{ weather.main.temp_min }} °C</h4>
+                                <p class="card-text">Min temp</p>
+                                <h4 class="card-title">MIN: {{ weather.main.temp_max }} °C</h4>
+                                <p class="card-text">Max temp</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                        <!-- begin card -->
+                        <div class="card">
+                            <div class="card-block">
+                                <h4 class="card-title">{{ weather.sys.sunrise|date('d.m.Y H:i') }}</h4>
+                                <p class="card-text">Sunrise</p>
+                                <h4 class="card-title">{{ weather.sys.sunset|date('d.m.Y H:i') }}</h4>
+                                <p class="card-text">Sunset</p>
+                            </div>
+                        </div>
+                        <!-- end card -->
+                    </div>
+                    <!-- end card-group -->
+                </div>
+                <!-- end col-6 -->
+            </div>
+            <br>
+        </div>
+        <!-- end weather-->
         <!-- begin timeline -->
         <ul class="timeline">
-            {% for item in rss.channel.item %}
+            {% for item in news.channel.item %}
                 <li>
                     <!-- begin timeline-time -->
                     <div class="timeline-time">
-                        <span class="time">{{ item.pubDate|date("l")}}</span>
-                        <span class="time">{{ item.pubDate|date("d.m.Y")}}</span>
-                        <span class="time">{{ item.pubDate|date("H:i")}}</span>
+                        <span class="time">{{ item.pubDate|date("l") }}</span>
+                        <span class="time">{{ item.pubDate|date("d.m.Y") }}</span>
+                        <span class="time">{{ item.pubDate|date("H:i") }}</span>
                     </div>
                     <!-- end timeline-time -->
                     <!-- begin timeline-icon -->
                     <div class="timeline-icon">
-                        <a href="javascript:;">&nbsp;</a>
+                        <a href="javascript:">&nbsp;</a>
                     </div>
                     <!-- end timeline-icon -->
                     <!-- begin timeline-body -->
                     <div class="timeline-body">
                         <div class="timeline-header">
-                            <span class="username"><a href="{{ item.link }}" target="_blank">> {{ item.title }}</a> <small></small></span>
+                            <span class="username"><a href="{{ item.link }}"
+                                                      target="_blank">> {{ item.title }}</a> <small></small></span>
                         </div>
                         <div class="timeline-content">
                             <p>

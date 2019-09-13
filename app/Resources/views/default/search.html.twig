@@ -14,8 +14,13 @@
         {% set printersCount = printers|length %}
         {% set companiesCount = companies|length %}
         {% set usersCount = users|length %}
-        <h1 class="page-header">Search Results <small>For keyword <b>"{{ keyword }}"</b> we found <b>{{ printersCount }}</b> result in
-                printers, <b>{{ companiesCount }}</b> result in companies and <b>{{ usersCount }}</b> result in users.</small>
+        {% set modelsCount = models|length %}
+        <h1 class="page-header">Search Results <small>For keyword
+                <b>"{{ keyword }}"</b> we found
+                <b>{{ printersCount }}</b> result in printers,
+                <b>{{ companiesCount }}</b> result in companies,
+                <b>{{ usersCount }}</b> result in users
+                and <b>{{ modelsCount }}</b> result in models.</small>
         </h1>
         <!-- end page-header -->
         <!-- begin row -->
@@ -112,7 +117,7 @@
                         <ul class="result-list">
                             {% for company in companies|reverse %}
                                 <li>
-                                    <a href="#" class="result-image"
+                                    <a href="{{ path('company_view', {'id': company.id}) }}" class="result-image"
                                        style="background-image: url({{ asset('images/company/' ~ company.image) }}); background-size: 200px; background-repeat: no-repeat"></a>
                                     <div class="result-info">
                                         <h4 class="title"><a
@@ -194,6 +199,41 @@
                         </ul>
                     {% endif %}
                     <!-- end result-list users-->
+                    <!-- begin result-list Companies-->
+                    {% if modelsCount > 0 %}
+                        <p><br>Results models</p>
+                        <ul class="result-list">
+                            {% for model in models|reverse %}
+                                <li>
+                                    <a href="{{ path('model_view', {'id': model.id}) }}" class="result-image"
+                                       style="background-image: url({{ asset('images/models/' ~ model.image) }}); background-size: 200px; background-repeat: no-repeat"></a>
+                                    <div class="result-info">
+                                        <h4 class="title"><a
+                                                    href="{{ path('model_view', {'id': model.id}) }}">{{ model.name }}</a>
+                                        </h4>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <br>
+                                        <div class="btn-row">
+                                            <a href="javascript:" data-toggle="tooltip" data-container="body"
+                                               data-title="Added from"><i
+                                                        class="fa fa-fw fa-user"></i> {{ model.userAdded }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="result-price">
+                                        <address class="m-t-5 m-b-5">
+                                            <small>Date Added</small>
+                                            <div class="date text-inverse m-t-5">{{ model.dateAdded|date("d.m.Y") }}</div>
+                                        </address>
+                                        <a href="{{ path('model_view', {'id': model.id}) }}"
+                                           class="btn btn-yellow btn-block">View Details</a>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    <!-- end result-list companies-->
                 </div>
                 <!-- end result-container -->
             </div>

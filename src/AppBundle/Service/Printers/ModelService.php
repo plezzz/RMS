@@ -122,4 +122,12 @@ class ModelService implements ModelServiceInterface
         $model = $this->findOneByID($id);
         return $this->modelRepository->delete($model);
     }
+
+    /**
+     * @return array
+     */
+    public function findAllDESC(): array
+    {
+        return $this->modelRepository->findBy([], ['id' => 'desc']);
+    }
 }

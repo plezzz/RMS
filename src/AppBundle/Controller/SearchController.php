@@ -28,7 +28,7 @@ class SearchController extends AbstractController
     public function index(Request $request)
     {
         $keyword = $request->request->get('keyword');
-        list($printers, $users, $companies)=$this->searchService->searchResult($keyword);
+        list($printers, $users, $companies, $models)=$this->searchService->searchResult($keyword);
 
         return $this->render(
             'default/search.html.twig',
@@ -36,6 +36,7 @@ class SearchController extends AbstractController
                 'printers' => $printers,
                 'users' => $users,
                 'companies' => $companies,
+                'models' => $models,
                 'keyword' => $keyword,
             ]
         );

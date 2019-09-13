@@ -7,6 +7,7 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Model;
 use AppBundle\Form\ModelType;
 use AppBundle\Service\Printers\ModelServiceInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormInterface;
@@ -155,6 +156,34 @@ class ModelController extends Controller
         return $this->render('printer/model/view.html.twig',
             [
                 'model' => $model,
+            ]);
+    }
+
+    /**
+     * @Route("/models/all",name="model_view_all")
+     * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
+     * @Security("has_role('ROLE_EMPLOYEE')")
+     *
+     * @param Request $request
+     * @param PaginatorInterface $paginator
+     * @return Response
+     */
+    public function viewModels(Request $request, PaginatorInterface $paginator)
+    {
+        $allModels = $this->modelService->findAllDESC();
+
+        $models = $paginator->paginate(
+        // Doctrine Query, not results
+            $allModels,
+            // Define the page parameter
+            $request->query->getInt('page', 1),
+            // Items per page
+            5
+        );
+
+        return $this->render('printer/model/viewAll.html.twig',
+            [
+                'models' => $models
             ]);
     }
 

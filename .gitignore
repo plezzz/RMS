@@ -16,8 +16,9 @@
 /vendor/
 /web/bundles/
 .idea
-/web/plugins/
-/web/plugins
-/web/plugins/*
+web/plugins/*
+web/plugins
+web
+web/plugins/
 
 
